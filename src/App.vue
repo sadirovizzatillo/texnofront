@@ -1,19 +1,40 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <component :is="layout">
+    <router-view :layout="layout"/>
+  </component>
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
 
+<script>
+import AuthLayout from './Layouts/AuthLayout.vue';
+import AdminLayout from './Layouts/AdminLayout.vue';
+import UserLayout from './Layouts/UserLayout.vue';
+import router from './router';
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
+  name:"App",
+  data(){
+    return{
+      route:this.$route
+    }
+  },
+  computed:{
+    layout(){
+      var result = null
+      if(router.currentRoute.value.meta.layout === "AuthLayout"){
+        result =  AuthLayout
+      }
+      if(router.currentRoute.value.meta.layout === "AdminLayout"){
+        result =  AdminLayout
+      } 
+      if(router.currentRoute.value.meta.layout === "UserLayout"){
+        result =  UserLayout
+      }
+      
+      return result
+    }
+  },
 }
 </script>
-
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -21,6 +42,24 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  position: relative;
+  height: 100vh;
+}
+
+nav {
+  padding: 30px;
+}
+
+nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+nav a.router-link-exact-active {
+  color: #42b983;
+}
+
+p, h1,h2,h3,h4{
+  margin: 0;
 }
 </style>
