@@ -4,29 +4,34 @@
     <div class="add-brand__wrapper">
         <div class="add-brand__input">
             <label for="brand">Brand</label>
-            <el-input id="brand" name="rband" v-model="brand" placeholder="Введите название"></el-input>
+            <el-input id="brand" name="brand" v-model="brand" placeholder="Введите название"></el-input>
         </div>
-        <div>
+        <!-- <div>
             <label for="category">Category</label>
             <el-select v-model="category" name="category" id="category">
                 <el-option value="computer">Комьютерная техника</el-option>
                 <el-option value="phone">alik</el-option>
                 <el-option value="dress">salom</el-option>
             </el-select>
-        </div>
+        </div> -->
     </div>
     <div class="add-brand__btns">
-        <el-button class="add-brand__add-btn">Qo'shish</el-button>
+        <el-button class="add-brand__add-btn" @click="addBrand">Qo'shish</el-button>
         <el-button>Bekor Qilish</el-button>
     </div>
   </div>
 </template>
 
 <script setup>
+import router from "@/router";
+import store from "@/store";
 import { ref } from "@vue/reactivity";
-
-const category = ref()
 const brand = ref()
+const addBrand = () => {
+    store.dispatch("brand/addBrand", brand.value);
+    router.go(-1)
+}
+// const category = ref()
 </script>
 
 <style scoped>

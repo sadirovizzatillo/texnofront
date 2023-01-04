@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const api = axios.create({
-    baseURL: "http://localhost:8000/api",
+    baseURL: "http://localhost:5000/api",
     timeout: 10000,
     headers: {
         "Content-Type": "application/json",
@@ -39,6 +39,9 @@ api.interceptors.request.use(
     
     api.interceptors.response.use(
         (res) => {
+            if (res.config.crossOrigin) {
+                res.headers.set('Set-Cookie', `SameSite=Strict`);
+            } 
             return res;
         },
         async (err) => {

@@ -34,4 +34,6 @@ export default {
 .main{
     padding: 40px 20px;
 }
+
+
 </style>>

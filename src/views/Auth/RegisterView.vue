@@ -83,7 +83,8 @@ const numberValidateForm = reactive({
   name: '',
   password:'',
   username:'',
-  email:''
+  email:'',
+  isAdmin: true
 })
 
 const toLogin = () =>{

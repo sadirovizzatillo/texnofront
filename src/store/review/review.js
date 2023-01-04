@@ -22,12 +22,13 @@ export default {
                 store.dispatch("toast/error", { title: err.name, message: err.response.data })
             }
         },
-        async postReview({ commit, dispatch }, form){
+        async postReview({ dispatch }, form){
             try{
                 const { data } = await api.post("/reviews", form);
+                console.log(form)
                 if(data.success){
-                    await dispatch("getAllReviews")
-                    await commit('product/SET_ONE_COMMENT', form, { root: true })
+                    await dispatch("product/getSingleProduct", form.product_id, { root:true })
+                    // await commit('product/SET_ONE_COMMENT', form, { root: true } )
                 }
             }catch(err){
                 store.dispatch("toast/error", { title: err.name, message: err.response.data })

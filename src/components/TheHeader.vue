@@ -19,7 +19,7 @@
         </div>
         
         
-        <div>
+        <div class="header-lang">
             <el-dropdown trigger="click">
                 <span class="el-dropdown-link">
                     UZ<el-icon class="el-icon--right"><arrow-down /></el-icon>
@@ -137,7 +137,7 @@ const goLogin = () => {
     border-bottom-right-radius: 12px !important;
     border-top-right-radius: 12px !important;
     background-color: rgb(112, 0, 255) !important;
-    padding: 16px 26px !important;
+    padding: 16px 26px;
 }
 .login-btn{
     margin-left: auto !important;
@@ -148,5 +148,19 @@ const goLogin = () => {
 }
 .login-btn img{
     margin-right: 8px;
+}
+
+@media screen and (max-width:830px) {
+    .site-logo{
+        display: none;
+    }
+    .header-lang{
+        display: none;
+    }
+}
+@media screen and (max-width:570px) {
+    .header-search__btn{
+        padding: 5 !important;
+    }
 }
 </style>

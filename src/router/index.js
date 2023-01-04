@@ -116,6 +116,8 @@ router.beforeEach( async (to, from, next) => {
     }
   }else if(!isAuth && to.meta.layout === 'AdminLayout'){
     next({ name:"Login" })
+  }else if(isAdmin?.isAdmin === false && to.meta.layout === 'AdminLayout'){
+    next("/")
   }
   next()
   // if (to.meta.layout !== 'AuthLayout' && !isAuthenticated) next({ name: 'Login' })

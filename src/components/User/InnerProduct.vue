@@ -326,4 +326,26 @@ const productBrand = computed(() => {
     box-shadow: 0 -1px 3px 0 rgb(0 0 0 / 10%), 0 -1px 2px 0 rgb(0 0 0 / 20%);
   }
 }
+
+@media screen  and (max-width:580px){
+  .inner-product .inner-product__image img{
+    width: 400px !important;
+    height: 400px !important;
+  }
+  .inner-product .product-price__brand{
+    flex-direction: column;
+  }
+  .inner-product .inner-product__price{
+    margin-bottom: 16px;
+  }
+  .inner-product .tab-comment textarea{
+    width: 300px;
+  }
+  .product-basket{
+    width: 160px !important;
+  }
+  .inner-product__right{
+    max-width: 400px;
+  }
+}
 </style>

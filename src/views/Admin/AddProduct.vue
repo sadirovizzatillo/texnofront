@@ -5,7 +5,7 @@
             <div class="product-inputs">
                 <div>
                     <label for="product">Product name</label>
-                    <el-input v-model="productName" placeholder="Product name..."></el-input>
+                    <el-input v-model="productTitle" placeholder="Product name..."></el-input>
                 </div>
                 <div>
                     <label for="category">Category</label>
@@ -26,7 +26,7 @@
                         v-for="item in brands"
                         :key="item._id"
                         :label="item.name"
-                        :value="item.name"
+                        :value="item._id"
                         />
                     </el-select>          
                 </div>
@@ -43,88 +43,88 @@
             </div>
             <div class="add-product__texarea">
                 <label>Comment</label>
-                <textarea cols="30" rows="10"></textarea>
+                <textarea cols="30" rows="10" v-model="productText"></textarea>
             </div>
             
             <div class="file-upload">
-                <el-upload action="#" list-type="picture-card" :auto-upload="false">
-                    <el-icon><Plus /></el-icon>
-                    
-                    <template #file="{ file }">
-                        <div>
-                            <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" />
-                            <span class="el-upload-list__item-actions">
-                                <span
-                                class="el-upload-list__item-preview"
-                                @click="handlePictureCardPreview(file)"
-                                >
-                                <el-icon><zoom-in /></el-icon>
-                            </span>
-                            <span
-                            v-if="!disabled"
-                            class="el-upload-list__item-delete"
-                            @click="handleDownload(file)"
-                            >
-                            <el-icon><Download /></el-icon>
-                        </span>
-                        <span
-                        v-if="!disabled"
-                        class="el-upload-list__item-delete"
-                        @click="handleRemove(file)"
-                        >
-                        <el-icon><Delete /></el-icon>
-                    </span>
-                </span>
-            </div>
-        </template>
-    </el-upload>
+                <el-upload 
+                action="#"  
+                v-model:file-list="fileList"
+                list-type="picture-card" 
+                :auto-upload="false"
+                :on-preview="handlePictureCardPreview"
+                :on-remove="handleRemove"
+                >
+                <el-icon><Plus /></el-icon>
+            </el-upload>
+            
+            <el-dialog v-model="dialogVisible">
+                <img w-full :src="dialogImageUrl" alt="Preview Image" />
+            </el-dialog>
+        </div>
+    </div>
     
-    <el-dialog v-model="dialogVisible">
-        <img w-full :src="dialogImageUrl" alt="Preview Image" />
-    </el-dialog>
-</div>
-</div>
-
-<div class="add-brand__btns">
-    <el-button class="add-brand__add-btn">Qo'shish</el-button>
-    <el-button>Bekor Qilish</el-button>
-</div>
+    <div class="add-brand__btns">
+        <el-button class="add-brand__add-btn" @click="addProduct">Qo'shish</el-button>
+        <el-button>Bekor Qilish</el-button>
+    </div>
 </div>
 </template>
 
 <script setup>
 import {useStore} from "vuex";
 import { computed, onMounted, ref } from "@vue/runtime-core";
-import { Delete, Download, Plus, ZoomIn } from '@element-plus/icons-vue';
+import { Plus } from '@element-plus/icons-vue';
 const store = useStore();
 
 
 const dialogImageUrl = ref('')
 const dialogVisible = ref(false)
-const disabled = ref(false)
-
-const productName = ref("")
+const productTitle = ref("")
 const productCategory = ref("")
 const productBrand = ref("")
+const productQuantity = ref(null)
+const productText = ref("")
+const productPrice = ref()
+// const productImage = ref(null)
+const categories = ref([
+{
+    name:"Kiyim",
+    value:"dress"
+},
+{
+    name:"texnika",
+    value:"dress"
+},
+])
+const fileList = ref([])
+
 onMounted(async () => {
-    await store.dispatch("product/getBrands")
+    await store.dispatch("brand/getBrands")
 })
 
 const brands = computed(() => {
-    return store.state.product?.brands
+    return store.state.brand?.brands
 })
 
-const handleRemove = (file) => {
-    console.log(file)
+const handleRemove = (uploadFile, uploadFiles) => {
+    console.log(uploadFile, uploadFiles)
 }
 
-const handlePictureCardPreview = (file) => {
-    dialogImageUrl.value = file.url
+const handlePictureCardPreview = (uploadFile) => {
+    dialogImageUrl.value = uploadFile.url
     dialogVisible.value = true
 }
 
-const handleDownload = (file) => {
-    console.log(file)
+const addProduct = async () => {
+    var formData = new FormData();
+    formData.append("title", productTitle.value);
+    formData.append("text", productText.value);
+    formData.append('quantity', productQuantity.value);
+    formData.append("price", productPrice.value);
+    formData.append("brand_id", productBrand.value);
+    formData.append("productImage", [...fileList.value]);
+    store.dispatch("product/addProduct", formData)
 }
 </script>
 

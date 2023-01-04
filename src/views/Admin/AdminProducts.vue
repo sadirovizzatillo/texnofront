@@ -8,8 +8,15 @@
     :suffix-icon="Search"
     @input="filterProduct($event)"
     />
-    <TheTable :all-products="products"/>
-  </div>
+    <TheTable :all-products="products" :brands="brands"/>
+    <el-pagination
+    background
+    layout="prev, pager, next"
+    :total="total"
+    @current-change="handleCurrentChange"
+    >
+  </el-pagination>
+</div>
 </template>
 
 <script setup>
@@ -29,18 +36,31 @@ const header = ref({
   goRoute:"addProduct",
   goSubRoute:"addBrand"
 })
+
 onMounted(async () => {
-  await store.dispatch("product/getAllProduct")
+  await store.dispatch("product/getAllAdminProduct")
+  await store.dispatch("brand/getBrands")
 })
+
+const brands = computed(() => {
+    return store.state.brand?.brands
+})
+
+const handleCurrentChange = (val) => {
+  store.dispatch("product/productsPaginate", val)
+}
 const filterProduct = async (e) => { 
   if(e === ''){
-    await store.dispatch("product/getAllProduct")
+    await store.dispatch("product/getAllAdminProduct")
   }else{
     store.dispatch("product/filterProduct", e)
   }
 }
 const products = computed(() => {
-  return store.state.product?.products
+  return store.state.product?.adminProducts
+})
+const total = computed(() => {
+  return Math.ceil(store.state.product?.total / 7) * 10
 })
 </script>
 
