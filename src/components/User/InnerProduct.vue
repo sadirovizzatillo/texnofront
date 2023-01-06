@@ -2,7 +2,7 @@
   <div class="inner-product">
     <div class="inner-product__features">
       <div class="inner-product__image">
-        <img :src="'http://localhost:5000/' + product?.productImage" :alt="product?.title">
+        <img :src="'https://texnomart.onrender.com/' + product?.productImage" :alt="product?.title">
       </div>
       <div class="inner-product__right"> 
         <h2 class="inner-product__right-title">{{ product?.title }}</h2>

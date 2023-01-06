@@ -17,7 +17,7 @@
         </el-table-column>
         <el-table-column label="Image">
             <template #default="scope">
-                <img :src="'http://localhost:5000/' + scope.row.productImage" :alt="scope.row.title" width="40" height="40">
+                <img :src="'https://texnomart.onrender.com/' + scope.row.productImage" :alt="scope.row.title" width="40" height="40">
             </template>
         </el-table-column>
         <el-table-column label="Operations" >
