@@ -49,6 +49,7 @@
 
 <script>
 import store from '@/store'
+import router from '@/router'
 // import router from '@/router'
 export default{
     name:"AuthLayout",
@@ -68,6 +69,7 @@ export default{
     methods:{
         logout(){
             store.dispatch("auth/logout")
+            router.push({ name: "Login" })
         },
         goQuestion(data){
             store.dispatch("questions/getSingleQuestions", data._id)

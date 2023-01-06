@@ -27,7 +27,7 @@
   </div>
   <div class="add-brand__btns">
     <el-button class="add-brand__add-btn" @click="addUser">Qo'shish</el-button>
-    <el-button>Bekor Qilish</el-button>
+    <el-button @click="(() => $router.go(-1))">Bekor Qilish</el-button>
   </div>
 </template>
 

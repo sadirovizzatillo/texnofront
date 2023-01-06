@@ -61,7 +61,7 @@
                         <el-option
                         v-for="item in adminOptions"
                         :key="item.value"
-                        :label="item.label"
+                        :label="item.name"
                         :value="item.value"
                         />
                     </el-select>
@@ -98,7 +98,7 @@
 
 <script setup>
 import TheAdminHeader from '@/components/Admin/TheAdminHeader.vue';
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref, reactive } from 'vue';
 import  { useStore } from 'vuex'
 const isEdit = ref(false)
 const editModal = ref(false)
@@ -108,6 +108,16 @@ const editName = ref(null)
 const editEmail = ref("")
 const isDelete = ref(false)
 const editPassword = ref('')
+const adminOptions = reactive([
+    {
+        name:"Admin",
+        value:true
+    },
+    {
+        name:"User",
+        value:false
+    },
+])
 const userId = ref(null)
 const store = useStore();
 const header = ref({

@@ -93,7 +93,7 @@ const handleSearch = (e) => {
     console.log(e)
 }
 const searchProduct = () => {
-    store.dispatch("product/searchProduct", search.value)
+    store.dispatch("product/searchProduct",search.value)
     if(router.currentRoute.value !== "searches"){
         router.push({ name: "SearchedProducts", query: { name: search.value }})
     }
