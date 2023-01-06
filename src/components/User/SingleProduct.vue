@@ -1,6 +1,11 @@
 <template>
     <router-link class="single-product" :to="{ name:'InnerProduct', params: { id: product.product._id }}">
-        <img :src="'https://texnomart.onrender.com/' + product.product?.productImage" :alt="product.product.title" width="220" height="220">
+        <!-- <div v-if="product?.product?.productImage">
+            <img  :src="'https://texnomart.onrender.com/' + product.product?.productImage" :alt="product.product.title" width="220" height="220">
+        </div> -->
+        <div>
+            <img  :src="require('../../assets/naushnik.jpg')" :alt="product.product.title" width="220" height="220">
+        </div>
         <h2>{{ product.product.title  }}</h2>
         <h3>{{ truncate(product.product?.text, 30) }}</h3>
         <div class="product-features">

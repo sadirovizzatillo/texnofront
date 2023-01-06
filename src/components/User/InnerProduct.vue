@@ -1,8 +1,11 @@
 <template>
   <div class="inner-product">
     <div class="inner-product__features">
-      <div class="inner-product__image">
-        <img :src="'https://texnomart.onrender.com/' + product?.productImage" :alt="product?.title">
+      <div class="inner-product__image" v-if="product?.productImage">
+        <img :src="require('../../assets/naushnik.jpg')" :alt="product?.title">
+      </div>
+      <div class="inner-product__image" v-else>
+        <img :src="require('../../assets/naushnik.jpg')" :alt="product?.title">
       </div>
       <div class="inner-product__right"> 
         <h2 class="inner-product__right-title">{{ product?.title }}</h2>

@@ -17,7 +17,12 @@
         </el-table-column>
         <el-table-column label="Image">
             <template #default="scope">
-                <img :src="'https://texnomart.onrender.com/' + scope.row.productImage" :alt="scope.row.title" width="40" height="40">
+                <!-- <div v-if="scope.row?.productImage">
+                    <img :src="'https://texnomart.onrender.com/' + scope.row.productImage" :alt="scope.row.title" width="40" height="40">
+                </div> -->
+                <div>
+                    <img :src="require('@/assets/naushnik.jpg')" :alt="scope.row.title" width="40" height="40">
+                </div>
             </template>
         </el-table-column>
         <el-table-column label="Operations" >
