@@ -6,7 +6,6 @@ export default {
 	namespaced: true,
 	state: {
 		products: [],
-		basket:[],
 		product: null,
 		productReviews: [],
 		brand: null,
@@ -37,9 +36,6 @@ export default {
 			state.adminProducts = products.products;
 			state.total = products.allPage;
 		},
-		SET_BASKET_PRODUCT(state, product){
-			state.basket.push(product)
-		}
 	},
 	actions: {
 		async getAllProduct({ commit }) {
@@ -174,17 +170,6 @@ export default {
 					});
 				}
 			},
-			async addBasket({ commit }, product){
-				try{
-					await commit("SET_BASKET_PRODUCT", product)
-					router.push({ name: "BasketProducts" })
-				}catch(err){
-					store.dispatch("toast/error", {
-						title: "Xato",
-						message: "Savatga qo'shsihda xato!",
-					});
-				}
-			}
 		},
 	};
 	

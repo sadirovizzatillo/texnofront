@@ -79,8 +79,7 @@ const commentForm = reactive({
 
 
 const addBasket = (product) => {
-  store.dispatch("product/addBasket", product)
-  console.log(product)
+  store.dispatch("basket/addBasket", product)
 }
 const submitComment = async () => {
   const productId = await store.state.product?.product?._id;
@@ -120,6 +119,8 @@ const productBrand = computed(() => {
 <style>
 .inner-product .inner-product__image{
   margin-right: 30px;
+  background: darkgray;
+  border-radius: 24px;
 }
 .inner-product .inner-product__image img{
   width: 600px !important;
@@ -291,16 +292,6 @@ const productBrand = computed(() => {
   margin-bottom: 32px;
 }
 
-@media screen  and (max-width: 1040px) {
-  .inner-product .inner-product__image img{
-    width: 400px !important;
-    height: 300px !important;
-  }
-  .inner-product .product-price{
-    font-size: 30px;
-    line-height: 42px;
-  }
-}
 
 @media screen  and (max-width: 1040px) {
   .inner-product .inner-product__image img{
@@ -330,6 +321,20 @@ const productBrand = computed(() => {
   }
 }
 
+@media screen  and (max-width:700px){
+  .inner-product .tab-comment textarea{
+    width: 385px;
+  }
+  .inner-product .inner-product__image img{
+    width: 500px !important;
+    height: 300px !important;
+    object-fit: contain;
+  }
+  .inner-product .product-price{
+    font-size: 30px;
+    line-height: 42px;
+  }
+}
 @media screen  and (max-width:580px){
   .inner-product .inner-product__image img{
     width: 400px !important;
@@ -351,4 +356,5 @@ const productBrand = computed(() => {
     max-width: 400px;
   }
 }
+
 </style>

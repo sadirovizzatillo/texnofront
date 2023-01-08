@@ -1,7 +1,7 @@
 <template>
     <div>
         <el-container>
-            <el-header>
+            <el-header class="header">
                 <TheHeader />
             </el-header>
             <div class="main">
@@ -15,11 +15,6 @@
 <script>
 import TheHeader from '@/components/TheHeader.vue';
 export default {
-    data(){
-        return{
-            
-        }
-    },
     components:{
         TheHeader
     }
@@ -33,7 +28,13 @@ export default {
 }
 .main{
     padding: 40px 20px;
+    margin: 0 auto;
+    max-width: 1220px;
+    width: 100%;
 }
-
-
-</style>>
+.header{
+    margin: 0 auto;
+    max-width: 1320px;
+    width: 100%;
+}
+</style>

@@ -1,5 +1,6 @@
 <template>
   <div class="basket-card">
+    {{ purchased }}
     <h3 class="basket-card__title">Buyurtmangiz</h3>
     <div class="basket-card__wrapper">
         <div class="basket-card__products">
@@ -10,12 +11,18 @@
             <h4>Jami</h4>
             <p>58000 so'm</p>
         </div>
-        <el-button class="basket-card__btn" type="submit">Sotib Olish</el-button>
+        <el-button class="basket-card__btn" type="primary">Sotib Olish</el-button>
     </div>
   </div>
 </template>
 
 <script setup>
+import store from "@/store"
+import { computed } from "@vue/runtime-core"
+
+const purchased = computed(() => {
+    return store.state.basket?.purchasing
+})
 </script>
 
 <style scoped>
@@ -26,9 +33,10 @@
     padding: 20px;
     align-items: flex-start;
     border-radius: 12px;
+    justify-content: space-between;
 }
 .basket-card__title{
-    margin-bottom: 16px;
+    margin-bottom: 24px;
 }
 .basket-card__wrapper{
     width: 100%;
