@@ -1,10 +1,7 @@
 <template>
   <div class="inner-product">
     <div class="inner-product__features">
-      <div class="inner-product__image" v-if="product?.productImage">
-        <img :src="require('../../assets/naushnik.jpg')" :alt="product?.title">
-      </div>
-      <div class="inner-product__image" v-else>
+      <div class="inner-product__image">
         <img :src="require('../../assets/naushnik.jpg')" :alt="product?.title">
       </div>
       <div class="inner-product__right"> 
@@ -31,7 +28,7 @@
         
         <div class="product-basket__wrapper">
           <p class="product-quantity">В наличии у {{ product?.quantity }} продавцов</p>
-          <el-button class="product-basket">Savatga</el-button>
+          <el-button class="product-basket" @click="addBasket(product)">Savatga</el-button>
         </div>
       </div>
     </div>
@@ -80,6 +77,11 @@ const commentForm = reactive({
   product_id:''
 })
 
+
+const addBasket = (product) => {
+  store.dispatch("product/addBasket", product)
+  console.log(product)
+}
 const submitComment = async () => {
   const productId = await store.state.product?.product?._id;
   const user_id = await JSON.parse(localStorage.getItem("users"));
@@ -101,11 +103,9 @@ const submitComment = async () => {
   commentForm.comment = ''
   commentForm.rate = 0
 }
-
 const handleClick = (tab, event) => {
   console.log(tab, event)
 }
-
 const product = computed(() => {
   return store.state.product.product
 })
@@ -119,12 +119,12 @@ const productBrand = computed(() => {
 
 <style>
 .inner-product .inner-product__image{
-  border-radius: 12px;
   margin-right: 30px;
 }
 .inner-product .inner-product__image img{
   width: 600px !important;
   height: 480px !important;
+  border-radius: 18px;
 }
 .inner-product .inner-product__features{
   padding: 40px 0;

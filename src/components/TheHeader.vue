@@ -38,7 +38,7 @@
         
         <el-button class="login-btn" @click="goLogin">
             <img src="../assets/avatar.png" alt="" width="30" height="30">
-            Kirish
+            <span>Kirish</span>
         </el-button>
     </div>
     
@@ -134,8 +134,8 @@ const goLogin = () => {
 
 .header-search__btn{
     border: 2px solid rgb(112, 0, 255) !important;
-    border-bottom-right-radius: 12px !important;
-    border-top-right-radius: 12px !important;
+    border-bottom-right-radius: 8px !important;
+    border-top-right-radius: 8px !important;
     background-color: rgb(112, 0, 255) !important;
     padding: 16px 26px;
 }
@@ -160,7 +160,18 @@ const goLogin = () => {
 }
 @media screen and (max-width:570px) {
     .header-search__btn{
-        padding: 5 !important;
+        padding: 5px !important;
+        border-bottom-right-radius: 9px !important;
+        border-top-right-radius: 9px !important;
+    }
+    .header-search{
+        margin-right: 0;
+    }
+    .header-category__btn{
+        margin-right: 12px;
+    }
+    .login-btn span{
+        display: none;
     }
 }
 </style>

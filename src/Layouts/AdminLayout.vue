@@ -69,7 +69,7 @@ export default{
     methods:{
         logout(){
             store.dispatch("auth/logout")
-            router.push({ name: "Login" })
+            router.push("/")
         },
         goQuestion(data){
             store.dispatch("questions/getSingleQuestions", data._id)

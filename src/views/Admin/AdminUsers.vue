@@ -9,7 +9,7 @@
             </el-table-column>
             <el-table-column label="Email">
                 <template #default="scope">
-                    <div>{{ scope.row.email ?? 'mavjud emas' }}</div>
+                    <div>{{ truncate(scope.row?.email, 20)  ?? 'mavjud emas' }}</div>
                 </template>
             </el-table-column>
             <el-table-column label="Username">
@@ -87,6 +87,7 @@
         </template>
     </el-dialog>
     <el-pagination
+    v-if="total > 11"
     background
     layout="prev, pager, next"
     :total="total"
@@ -109,14 +110,14 @@ const editEmail = ref("")
 const isDelete = ref(false)
 const editPassword = ref('')
 const adminOptions = reactive([
-    {
-        name:"Admin",
-        value:true
-    },
-    {
-        name:"User",
-        value:false
-    },
+{
+    name:"Admin",
+    value:true
+},
+{
+    name:"User",
+    value:false
+},
 ])
 const userId = ref(null)
 const store = useStore();
@@ -126,6 +127,7 @@ const header = ref({
     addMain:"Add User",
     goRoute:"addUser",
 })
+
 onMounted(() => {
     store.dispatch("auth/getAllUsers")
 })
@@ -134,8 +136,15 @@ const users = computed(() => {
     return store.state.auth?.users
 })
 const total = computed(() => {
-    return store.state.auth?.total
+    return Math.ceil(store.state.auth?.total / 7) * 10
 })
+const truncate = (value, lengths) => {
+    if (value.length > lengths) {
+        return value.substring(0, lengths) + "...";
+    } else {
+        return value;
+    }
+}
 const userModal = (data) => {
     editModal.value = !editModal.value
     if(data.name === 'edit'){

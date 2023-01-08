@@ -43,6 +43,14 @@ const routes = [
     component: () => import('../views/User/SearchedProducts.vue')
   }, 
   {
+    path: '/basket',
+    name: 'BasketProducts',
+    meta:{
+      layout: 'UserLayout'
+    },
+    component: () => import('../views/User/BasketProducts.vue')
+  }, 
+  {
     path: '/admin',
     name: 'Admin',
     redirect: { name: "AdminProducts" },

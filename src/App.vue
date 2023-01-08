@@ -62,4 +62,7 @@ nav a.router-link-exact-active {
 p, h1,h2,h3,h4{
   margin: 0;
 }
+.el-pagination{
+  margin-top: 32px;
+}
 </style>

@@ -6,6 +6,7 @@ export default {
 	namespaced: true,
 	state: {
 		products: [],
+		basket:[],
 		product: null,
 		productReviews: [],
 		brand: null,
@@ -36,6 +37,9 @@ export default {
 			state.adminProducts = products.products;
 			state.total = products.allPage;
 		},
+		SET_BASKET_PRODUCT(state, product){
+			state.basket.push(product)
+		}
 	},
 	actions: {
 		async getAllProduct({ commit }) {
@@ -82,93 +86,105 @@ export default {
 			try {
 				const ok = await state.adminProducts.filter(data =>
 					data.title.toUpperCase().includes(payload.toUpperCase())
-				);
-				state.adminProducts = ok;
-			} catch (err) {
-				store.dispatch("toast/error", {
-					title: err.name,
-					message: err.response.data,
-				});
-			}
-		},
-		async getAllAdminProduct({ commit }) {
-			try {
-				const { data } = await api.get("/products/all/admin");
-				if (data.success) {
-					await commit("SET_ALL_ADMIN_USERS", data);
-				}
-			} catch (err) {
-				store.dispatch("toast/error", {
-					title: err.name,
-					message: err.response.data,
-				});
-			}
-		},
-		async productsPaginate({ commit }, val) {
-			try {
-				const { data } = await api.get(`/products/all/admin?page=${val}`);
-				if (data.success) {
-					await commit("SET_ALL_ADMIN_USERS", data);
-				}
-			} catch (err) {
-				store.dispatch("toast/error", {
-					title: err.name,
-					message: err.response.data,
-				});
-			}
-		},
-		async deleteProduct(_, id) {
-			try {
-				const { data } = await api.delete(`/products/${id}`);
-				if (data.success) {
-					store.dispatch("toast/success", {
-						title: "Muvaffaqqiyatli",
-						message: "Product o'chirildi!",
+					);
+					state.adminProducts = ok;
+				} catch (err) {
+					store.dispatch("toast/error", {
+						title: err.name,
+						message: err.response.data,
 					});
 				}
-			} catch (err) {
-				store.dispatch("toast/error", {
-					title: err.name,
-					message: err.response.data,
-				});
-			}
-		},
-		async editProduct(_, form) {
-			try {
-				const { data } = await api.put(`/products/${form.id}`, form);
-				if (data.success) {
-					store.dispatch("toast/success", {
-						title: "Muvaffaqqiyatli",
-						message: "Product o'zgartirildi!",
+			},
+			async getAllAdminProduct({ commit }) {
+				try {
+					const { data } = await api.get("/products/all/admin");
+					if (data.success) {
+						await commit("SET_ALL_ADMIN_USERS", data);
+					}
+				} catch (err) {
+					store.dispatch("toast/error", {
+						title: err.name,
+						message: err.response.data,
 					});
 				}
-			} catch (err) {
-				store.dispatch("toast/error", {
-					title: err.name,
-					message: err.message,
-				});
-			}
-		},
-		async addProduct(_, form) {
-			try {
-				const { data } = await api.post("/products", form, {
-					headers: {
-						"Content-Type": "multipart/form-data",
-					},
-				});
-				if (data.success) {
-					store.dispatch("toast/success", {
-						title: "Muvaffaqqiyatli",
-						message: "Product qo'shildi!",
+			},
+			async productsPaginate({ commit }, val) {
+				try {
+					const { data } = await api.get(`/products/all/admin?page=${val}`);
+					if (data.success) {
+						await commit("SET_ALL_ADMIN_USERS", data);
+					}
+				} catch (err) {
+					store.dispatch("toast/error", {
+						title: err.name,
+						message: err.response.data,
 					});
-					router.push({ name: "Admin"})
 				}
-			} catch (err) {
-				store.dispatch("toast/error", {
-					title: err.name,
-					message: err.message,
-				});
+			},
+			async deleteProduct(_, id) {
+				try {
+					const { data } = await api.delete(`/products/${id}`);
+					if (data.success) {
+						store.dispatch("toast/success", {
+							title: "Muvaffaqqiyatli",
+							message: "Product o'chirildi!",
+						});
+					}
+				} catch (err) {
+					store.dispatch("toast/error", {
+						title: err.name,
+						message: err.response.data,
+					});
+				}
+			},
+			async editProduct(_, form) {
+				try {
+					const { data } = await api.put(`/products/${form.id}`, form);
+					if (data.success) {
+						store.dispatch("toast/success", {
+							title: "Muvaffaqqiyatli",
+							message: "Product o'zgartirildi!",
+						});
+					}
+				} catch (err) {
+					store.dispatch("toast/error", {
+						title: err.name,
+						message: err.message,
+					});
+				}
+			},
+			async addProduct(_, form) {
+				try {
+					const { data } = await api.post("/products", form, {
+						headers: {
+							"Content-Type": "multipart/form-data",
+						},
+					});
+					if (data.success) {
+						store.dispatch("toast/success", {
+							title: "Muvaffaqqiyatli",
+							message: "Product qo'shildi!",
+						});
+						router.push({ name: "Admin"})
+					}
+				} catch (err) {
+					store.dispatch("toast/error", {
+						title: err.name,
+						message: err.message,
+					});
+				}
+			},
+			async addBasket({ commit }, product){
+				try{
+					await commit("SET_BASKET_PRODUCT", product)
+					router.push({ name: "BasketProducts" })
+				}catch(err){
+					store.dispatch("toast/error", {
+						title: "Xato",
+						message: "Savatga qo'shsihda xato!",
+					});
+				}
 			}
 		},
-	},
-};
+	};
+	

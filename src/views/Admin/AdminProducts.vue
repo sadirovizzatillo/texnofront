@@ -10,6 +10,7 @@
     />
     <TheTable :all-products="products" :brands="brands"/>
     <el-pagination
+    v-if="total > 10"
     background
     layout="prev, pager, next"
     :total="total"
@@ -43,7 +44,7 @@ onMounted(async () => {
 })
 
 const brands = computed(() => {
-    return store.state.brand?.brands
+  return store.state.brand?.brands
 })
 
 const handleCurrentChange = (val) => {

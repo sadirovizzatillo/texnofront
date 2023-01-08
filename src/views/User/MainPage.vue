@@ -1,5 +1,6 @@
 <template>
   <div>
+    <TheCarousel/>
     <div class="main-products">
       <SingleProduct :product="product" v-for="(product, id) in products" :key="id" />
     </div>
@@ -8,6 +9,7 @@
 
 <script setup>
 import SingleProduct from '@/components/User/SingleProduct.vue';
+import TheCarousel from '@/components/TheCarousel.vue';
 import { computed, onMounted } from '@vue/runtime-core';
 import { useStore } from 'vuex';
 const store = useStore()
@@ -23,9 +25,15 @@ const products = computed(() => {
 <style>
 .main-products{
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  gap: 20px;
 }
-@media screen and (max-width:950px) {
+@media screen and (max-width:1150px) {
+  .main-products{
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+}
+@media screen and (max-width:970px) {
   .main-products{
     grid-template-columns: 1fr 1fr 1fr;
   }
