@@ -1,25 +1,41 @@
 <template>
-  <div class="basket-card">
-    {{ purchased }}
-    <h3 class="basket-card__title">Buyurtmangiz</h3>
-    <div class="basket-card__wrapper">
-        <div class="basket-card__products">
-            <h4>Mahsulotlar</h4>
-            <p>58000 so'm</p>
+    <div class="basket-card">
+        <h3 class="basket-card__title">Buyurtmangiz</h3>
+        <div class="basket-card__wrapper">
+            <div class="basket-card__products">
+                <h4>Mahsulotlar {{ purchased.length }}</h4>
+                <p>{{ priceSpacer(allSum) }} so'm</p>
+            </div>
+            <div class="basket-card__sum">
+                <h4>Jami</h4>
+                <p>{{ priceSpacer(allSum) }} so'm</p>
+            </div>
+            <el-button class="basket-card__btn" type="primary" @click="buyProducts">Sotib Olish</el-button>
         </div>
-        <div class="basket-card__sum">
-            <h4>Jami</h4>
-            <p>58000 so'm</p>
-        </div>
-        <el-button class="basket-card__btn" type="primary">Sotib Olish</el-button>
     </div>
-  </div>
 </template>
 
 <script setup>
+import priceSpacer from '../../helpers/price.spaces';
 import store from "@/store"
 import { computed } from "@vue/runtime-core"
 
+const buyProducts = async () => {
+    const user = await JSON.parse(localStorage.getItem("users"));
+    if(user){
+        store.dispatch("basket/buyProducts")
+    }else{
+        store.dispatch("toast/warning", {
+            title: "Ogohlantirish",
+            message: "Siz ro'yxatdan o'tmagansiz!"
+        })
+    }
+}
+
+const allSum = computed(() => {
+    const result = store.state.basket?.purchasing.reduce((total, value) => total += value.totalPrice, 0)
+    return result
+})
 const purchased = computed(() => {
     return store.state.basket?.purchasing
 })

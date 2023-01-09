@@ -10,13 +10,13 @@
                 </div>
             </div>
             <div class="basket-single__quantity">
-                <el-input-number v-model="num" :min="1" :max="basketProduct.quantity" @change="handleQuantityChange(basketProduct)"></el-input-number>
-                <span>{{ basketProduct.price }} so'm/birlik</span>
+                <el-input-number :model-value="basketProduct.quantity" v-model="num" :min="1" :max="basketProduct.realQuantity" @change="handleQuantityChange(basketProduct)"></el-input-number>
+                <span>{{ priceSpacer(basketProduct?.realPrice) }} so'm/birlik</span>
             </div>
             <div class="basket-single__sum">
                 <el-button type="warning" @click="removeBasketProduct(basketProduct)">Yo'q qilish</el-button>
                 <div class="basket-single__sum-wrapper">
-                    <h4>{{ basketProduct.price * num}} so'm</h4>
+                    <h4>{{ priceSpacer(basketProduct?.totalPrice) }} so'm</h4>
                     <p>0</p>
                 </div>
             </div>
@@ -25,6 +25,7 @@
 </template>
 
 <script setup>
+import priceSpacer from '../../helpers/price.spaces';
 import store from "@/store";
 import { ref }  from "@vue/reactivity";
 import { defineProps } from "vue";
@@ -39,7 +40,8 @@ const removeBasketProduct = (product) => {
     store.dispatch("basket/removeBasketProduct", product)
 }
 const handleQuantityChange = (product) => {
-    store.dispatch("basket/countTotal", { count:num.value, product:product})
+    console.log(num.value, product)
+    store.dispatch("basket/countTotal", { count: num.value, product:product })
 }
 
 </script>

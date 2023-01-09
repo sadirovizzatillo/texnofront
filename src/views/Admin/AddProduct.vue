@@ -3,7 +3,7 @@
 		<h2 class="add-product__title">Add Product</h2>
 		<el-form
 		:model="products"
-		class="demo-ruleForm login-form"
+		class="demo-ruleForm"
 		>
 		<div class="product-inputs">
 			<div>

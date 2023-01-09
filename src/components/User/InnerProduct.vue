@@ -80,6 +80,7 @@ const commentForm = reactive({
 
 const addBasket = (product) => {
   store.dispatch("basket/addBasket", product)
+  console.log(product)
 }
 const submitComment = async () => {
   const productId = await store.state.product?.product?._id;

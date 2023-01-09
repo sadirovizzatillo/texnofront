@@ -1,6 +1,6 @@
 <template>
   <div class="basket" v-if="basketProducts.length">
-    <h2 class="basket-title">Savatingiz <span>{{ '1 ta mahsulot' }}</span></h2>
+    <h2 class="basket-title">Savatingiz <span>{{ basketProducts.length }} ta mahsulot</span></h2>
     <div class="basket__wrapper" >
       <div class="basket-products">
         <SingleBasketProduct :basketProduct="product" v-for="(product, id) in basketProducts" :key="id"/>
@@ -10,7 +10,7 @@
   </div>
   <div class="basket" v-else>
     <el-empty description="Savatda hozircha mahsulot yoʻq">
-      <el-button type="primary">Bosh sahifa</el-button>
+      <el-button type="primary" @click="(() => $router.push('/'))">Bosh sahifa</el-button>
     </el-empty>
   </div>
 </template>
@@ -23,7 +23,7 @@ import { computed } from '@vue/runtime-core';
 const store = useStore()
 
 const basketProducts = computed(() => {
-  return store.state.basket?.basket
+  return store.state.basket?.purchasing
 })
 </script>
 
