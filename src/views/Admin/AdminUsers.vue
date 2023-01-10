@@ -124,6 +124,7 @@ const store = useStore();
 const header = ref({
     title:"Users",
     hasBtn:false,
+    hasAddition:false,
     addMain:"Add User",
     goRoute:"addUser",
 })

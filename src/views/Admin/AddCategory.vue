@@ -1,23 +1,23 @@
 <template>
-    <div class="add-brand">
-        <h2>Add Brand</h2>
+    <div class="add-category">
+        <h2>Add category</h2>
         <div 
-        class="add-brand__wrapper " 
+        class="add-category__wrapper " 
         >
         <el-form 
-        class="add-brand__input demo-ruleForm login-form"
+        class="add-category__input demo-ruleForm login-form"
         :model="form"
         >
         <el-form-item
-        label="Brand"
-        prop="brand"
+        label="Category"
+        prop="category"
         :rules="[
-        { required: true, message: 'brand is required' },
+        { required: true, message: 'category is required' },
         ]"
         >
         <el-input 
-        v-model="form.brand" 
-        placeholder="Brand..."
+        v-model="form.category" 
+        placeholder="category..."
         ></el-input>
     </el-form-item>        
 </el-form>
@@ -30,8 +30,8 @@
     </el-select>
 </div> -->
 </div>
-<div class="add-brand__btns">
-    <el-button class="add-brand__add-btn" @click="addBrand">Qo'shish</el-button>
+<div class="add-category__btns">
+    <el-button class="add-category__add-btn" @click="addcategory">Qo'shish</el-button>
     <el-button @click="(() => $router.go(-1))">Bekor Qilish</el-button>
 </div>
 </div>
@@ -42,48 +42,47 @@ import router from "@/router";
 import store from "@/store";
 import { reactive } from "@vue/reactivity";
 const form = reactive({
-    brand:""
+    category:""
 })
-const addBrand = () => {
-    store.dispatch("brand/addBrand", form.brand);
+const addcategory = () => {
+    store.dispatch("category/addCategory", form.category);
     router.go(-1)
 }
-// const category = ref()
 </script>
 
 <style scoped>
-.add-brand h2{
+.add-category h2{
     margin-bottom: 20px;
     text-align: left;
 }
-.add-brand__wrapper{
+.add-category__wrapper{
     display: flex;
     align-items: center;
     max-width: 600px;
 }
-.add-brand__input{
+.add-category__input{
     margin-right: 24px;
 }
-.add-brand__wrapper div{
+.add-category__wrapper div{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     margin-bottom: 12px;
 }
-.add-brand__wrapper div label{
+.add-category__wrapper div label{
     margin-bottom: 8px;
 }
-.add-brand__btns{
+.add-category__btns{
     display: flex;
     align-items: center;
 }
-.add-brand__add-btn{
+.add-category__add-btn{
     width: 250px;
     background-color: #3D7BFE;
     color: #fff;
     border: 2px solid #3D7BFE;
 }
-.add-brand__add-btn:hover{
+.add-category__add-btn:hover{
     background-color: inherit;
     color: #3D7BFE;
 }

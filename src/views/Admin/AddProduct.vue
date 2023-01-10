@@ -1,6 +1,6 @@
 <template>
 	<div class="add-product">
-		<h2 class="add-product__title">Add Product</h2>
+		<TheAdminHeader :headers="header"/>
 		<el-form
 		:model="products"
 		class="demo-ruleForm"
@@ -29,10 +29,9 @@
 			>
 			<el-option
 			v-for="item in categories"
-			:key="item.value"
-			:label="item.label"
-			:value="item.value"
-			:disabled="item.disabled"
+			:key="item._id"
+			:label="item.name"
+			:value="item._id"
 			/>
 		</el-select>
 	</el-form-item>
@@ -40,13 +39,11 @@
 		<el-form-item label="Brand">
 			<el-select
 			v-model="products.productBrand"
-			name="brand_id"
 			id="brand"
 			placeholder="Brands"
 			>
 			<el-option
 			v-for="item in brands"
-			:name="brand_id"
 			:key="item._id"
 			:label="item.name"
 			:value="item._id"
@@ -115,6 +112,7 @@
 </template>
 
 <script setup>
+import TheAdminHeader from "@/components/Admin/TheAdminHeader.vue";
 import { useStore } from "vuex";
 import { computed, onMounted, ref, reactive } from "@vue/runtime-core";
 import { Plus } from "@element-plus/icons-vue";
@@ -122,6 +120,15 @@ const store = useStore();
 
 const dialogImageUrl = ref("");
 const dialogVisible = ref(false);
+const header = ref({
+	title:"Add Product",
+	hasBtn:true,
+	hasAddition:false,
+	addMain:"Add Brand",
+	addSubMain: "Add Category",
+	goRoute:"addBrand",
+	goSubRoute:"addCategory"
+})
 const products = reactive({
 	productTitle: "",
 	productCategory:"",
@@ -131,25 +138,19 @@ const products = reactive({
 	productPrice:null,
 	img: null
 });
-const categories = ref([
-{
-	name: "Kiyim",
-	value: "dress",
-},
-{
-	name: "texnika",
-	value: "dress",
-},
-]);
 const fileList = ref([]);
 const selectedFile = (e) => {
 	products.img = e
 }
 onMounted(async () => {
 	await store.dispatch("brand/getBrands");
+	await store.dispatch("category/getCategories");
 });
 
 
+const categories = computed(() => {
+	return store.state.category?.categories;
+});
 
 const brands = computed(() => {
 	return store.state.brand?.brands;
@@ -172,6 +173,7 @@ const addProduct = async () => {
 	formData.append("price", products.productPrice);
 	formData.append("brand_id", products.productBrand);
 	formData.append("file", products.img?.raw);
+	formData.append("category", products.productCategory);
 	store.dispatch("product/addProduct", formData);
 };
 </script>

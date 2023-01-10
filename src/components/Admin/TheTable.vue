@@ -69,6 +69,16 @@
                     />
                 </el-select>          
             </el-form-item>
+            <el-form-item label="Edit Category">
+                <el-select v-model="editCategory" name="category" id="category" placeholder="Categories">
+                    <el-option
+                    v-for="item in categories"
+                    :key="item._id"
+                    :label="item.name"
+                    :value="item._id"
+                    />
+                </el-select>          
+            </el-form-item>
         </el-form>
     </span>
     <span v-if="isDelete">Do you really want to delete this user?</span>
@@ -101,6 +111,7 @@ const editPrice = ref('')
 const isDelete = ref(false)
 const editText = ref('')
 const editBrand = ref(null)
+const editCategory = ref(null)
 const productId = ref(null)
 const store = useStore();
 
@@ -115,6 +126,7 @@ const userModal = (data) => {
         productId.value = data.val?._id
         editQuantity.value = data.val?.quantity
         editText.value = data.val?.text
+        editCategory.value = data.val.category
     }
     
     if(data.name === 'delete'){
@@ -138,7 +150,8 @@ const editUser = () => {
         id: productId.value,
         text: editText.value,
         brand_id: editBrand.value,
-        quantity:editQuantity.value
+        quantity:editQuantity.value,
+        category: editCategory.value
     }
     store.dispatch("product/editProduct", form)
 }
@@ -148,6 +161,9 @@ defineProps({
         type:Array
     },
     brands:{
+        type:Array
+    },
+    categories:{
         type:Array
     }
 })

@@ -27,7 +27,7 @@ export default {
     margin: 0 auto;
 }
 .main{
-    padding: 40px 20px;
+    padding: 20px;
     margin: 0 auto;
     max-width: 1220px;
     width: 100%;

@@ -5,6 +5,7 @@ import review from './review/review'
 import brand from './brand/brand'
 import toast from './toast'
 import basket from './basket/basket'
+import category from './category/category'
 export default createStore({
   state: {
     appImgUrl:process.env.IMGURL
@@ -21,6 +22,7 @@ export default createStore({
     brand,
     review,
     product,
-    basket
+    basket,
+    category
   }
 })

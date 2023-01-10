@@ -2,6 +2,9 @@
     <header class="admin-header">
         <h3>{{ headers.title }}</h3>
         <div class="add-btn__wrapper">
+            <el-button class="add-brand__btn" v-if="headers.hasAddition" @click="(() => $router.push(`/admin/${headers.goAddition}`))">
+                {{ headers.addition }}
+            </el-button>
             <el-button class="add-brand__btn" v-if="headers.hasBtn" @click="(() => $router.push(`/admin/${headers.goSubRoute}`))">
                 {{ headers.addSubMain }}
             </el-button>

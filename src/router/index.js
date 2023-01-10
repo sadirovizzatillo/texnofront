@@ -83,6 +83,14 @@ const routes = [
         component: () => import('../views/Admin/AddBrand.vue')
       },
       {
+        path: '/admin/addCategory',
+        name: 'AddCategory',
+        meta:{
+          layout: 'AdminLayout'
+        },
+        component: () => import('../views/Admin/AddCategory.vue')
+      },
+      {
         path: '/admin/users',
         name: 'AdminUsers',
         meta:{

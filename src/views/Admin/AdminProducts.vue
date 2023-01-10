@@ -8,7 +8,7 @@
     :suffix-icon="Search"
     @input="filterProduct($event)"
     />
-    <TheTable :all-products="products" :brands="brands"/>
+    <TheTable :all-products="products" :brands="brands" :categories="categories"/>
     <el-pagination
     v-if="total > 10"
     background
@@ -31,21 +31,25 @@ const searchProducts = ref('')
 const store = useStore()
 const header = ref({
   title:"Products",
-  hasBtn:true,
+  hasBtn:false,
+  hasAddition:false,
   addMain:"Add Product",
-  addSubMain: "Add Brand",
   goRoute:"addProduct",
-  goSubRoute:"addBrand"
 })
 
 onMounted(async () => {
   await store.dispatch("product/getAllAdminProduct")
   await store.dispatch("brand/getBrands")
+  await store.dispatch("category/getCategories")
 })
 
 const brands = computed(() => {
   return store.state.brand?.brands
 })
+const categories = computed(() => {
+  return store.state.category?.categories
+})
+
 
 const handleCurrentChange = (val) => {
   store.dispatch("product/productsPaginate", val)
