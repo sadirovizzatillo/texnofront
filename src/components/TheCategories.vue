@@ -22,6 +22,8 @@ defineProps({
     width: 40px;
     display: flex;
     flex-direction: column;
+    cursor:pointer;
+    margin-right: 16px;
 }
 
 .category-item::after{
@@ -33,9 +35,11 @@ defineProps({
     margin-top: 4px;
     transition: all 0.5s ease;
 }
+
 .category-item:hover::after{
     opacity: 0.7;
     width: 100%;
     height: 2px;
 }
+
 </style>

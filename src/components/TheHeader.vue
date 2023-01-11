@@ -103,18 +103,21 @@
 
 <el-drawer
 v-model="dialog"
-title="I have a nested form inside!"
 direction="ttb"
 custom-class="demo-drawer"
+size="100%"
+:with-header=false
+:show-close=false
 >
 <div class="demo-drawer__content">
-ssalom
+    <TheHeaderCategoryDrawer />
 </div>
 </el-drawer>
 
 </template>
 
 <script setup>
+import TheHeaderCategoryDrawer from './User/TheHeaderCategoryDrawer.vue'
 import router from '@/router'
 import store from '@/store'
 import {
@@ -172,6 +175,10 @@ const goLogin = () => {
     background-color: inherit !important;
 }
 
+.demo-drawer__content{
+    display: flex;
+    align-items: center;
+}
 .header-search__btn{
     border: 2px solid rgb(112, 0, 255) !important;
     border-bottom-right-radius: 8px !important;

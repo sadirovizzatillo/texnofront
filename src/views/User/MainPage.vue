@@ -1,6 +1,8 @@
 <template>
   <div>
-    <TheCategories :category="category" v-for="(category, id) in categories" :key="id" class="categories-wrapper"/>
+    <div class="categories-wrapper">
+      <TheCategories :category="category" v-for="(category, id) in categories" :key="id"/>
+    </div>
     <TheCarousel/>
     <div class="main-products">
       <SingleProduct :product="product" v-for="(product, id) in products" :key="id" />
@@ -34,6 +36,7 @@ const categories = computed(() => {
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   gap: 20px;
 }
+
 .categories-wrapper{
   display: flex;
   align-items: flex-start;
