@@ -51,6 +51,14 @@ const routes = [
     component: () => import('../views/User/BasketProducts.vue')
   }, 
   {
+    path: '/category/:id',
+    name: 'CategoryRelated',
+    meta:{
+      layout: 'UserLayout'
+    },
+    component: () => import('../views/User/CategoryRelated.vue')
+  }, 
+  {
     path: '/admin',
     name: 'Admin',
     redirect: { name: "AdminProducts" },
@@ -89,6 +97,14 @@ const routes = [
           layout: 'AdminLayout'
         },
         component: () => import('../views/Admin/AddCategory.vue')
+      },
+      {
+        path: '/admin/addSubCategory',
+        name: 'AddSubCategory',
+        meta:{
+          layout: 'AdminLayout'
+        },
+        component: () => import('../views/Admin/AddSubCategory.vue')
       },
       {
         path: '/admin/users',

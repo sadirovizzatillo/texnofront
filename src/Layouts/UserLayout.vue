@@ -4,6 +4,9 @@
             <el-header class="header">
                 <TheHeader />
             </el-header>
+            <div class="categories-wrapper">
+                <TheCategories :category="category" v-for="(category, id) in categories" :key="id"/>
+            </div>
             <div class="main">
                 <router-view></router-view>
             </div>
@@ -14,10 +17,22 @@
 
 <script>
 import TheHeader from '@/components/TheHeader.vue';
+import TheCategories from '@/components/TheCategories.vue';
+import store from '@/store';
 export default {
+    mounted(){
+        store.dispatch("category/getCategories")
+    },
     components:{
-        TheHeader
+        TheHeader,
+        TheCategories
+    },
+    computed:{
+        categories(){
+            return store.state.category?.categories
+        }
     }
+    
 }
 </script>
 
@@ -25,6 +40,9 @@ export default {
 .main .el-container{
     max-width: 1200px !important;
     margin: 0 auto;
+}
+.el-header{
+    padding: 0 !important;
 }
 .main{
     padding: 20px;
@@ -34,7 +52,16 @@ export default {
 }
 .header{
     margin: 0 auto;
-    max-width: 1320px;
+    max-width: 1220px;
     width: 100%;
+    padding:0 20px;
+}
+.categories-wrapper{
+    margin: 0 auto;
+    max-width: 1220px;
+    width: 100%;
+    padding: 20px 20px 0px;
+    display: flex;
+    align-items: flex-start;
 }
 </style>

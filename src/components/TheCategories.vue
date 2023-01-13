@@ -1,10 +1,13 @@
 <template>
-    <li class="category-item">
-        <a class="category-title">{{ category.name }}</a>
+    <li class="category-item" @click="getCategoruProducts(category._id)">
+        <router-link 
+        :to="{name: 'CategoryRelated', params: { id: category._id }}" 
+        class="category-title">{{ category.name }}</router-link>
     </li>
 </template>
 
 <script setup>
+import store from '@/store';
 import { defineProps } from 'vue';
 defineProps({
     category:{
@@ -12,9 +15,16 @@ defineProps({
         required:true
     }
 })
+const getCategoruProducts = async (route) => {
+    await store.dispatch("category/getAllProduct", route)
+    await store.dispatch("category/getSingleCategory", route)
+}
 </script>
 
 <style>
+a{
+    text-decoration: none;
+}
 .category-title{
     color: rgba(0, 0, 0, 0.575) !important;
 }

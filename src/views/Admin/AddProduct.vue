@@ -26,9 +26,25 @@
 			name="category"
 			id="category"
 			placeholder="Category"
+			@change="handleSubCategory($event)"
 			>
 			<el-option
 			v-for="item in categories"
+			:key="item._id"
+			:label="item.name"
+			:value="item._id"
+			/>
+		</el-select>
+	</el-form-item>
+	<el-form-item label="SubCategory">
+			<el-select
+			v-model="products.productSubCategory"
+			name="subcategory"
+			id="subcategory"
+			placeholder="SubCategory"
+			>
+			<el-option
+			v-for="item in subCategory"
 			:key="item._id"
 			:label="item.name"
 			:value="item._id"
@@ -120,18 +136,22 @@ const store = useStore();
 
 const dialogImageUrl = ref("");
 const dialogVisible = ref(false);
+const subCategory = ref(null)
 const header = ref({
 	title:"Add Product",
 	hasBtn:true,
-	hasAddition:false,
+	hasAddition:true,
+	addition:"Sub Category",
 	addMain:"Add Brand",
 	addSubMain: "Add Category",
+	goAddition:"addSubCategory",
 	goRoute:"addBrand",
 	goSubRoute:"addCategory"
 })
 const products = reactive({
 	productTitle: "",
 	productCategory:"",
+	productSubCategory:"",
 	productBrand:"",
 	productQuantity:null,
 	productText:"",
@@ -145,12 +165,22 @@ const selectedFile = (e) => {
 onMounted(async () => {
 	await store.dispatch("brand/getBrands");
 	await store.dispatch("category/getCategories");
+	await store.dispatch("category/getSubCategories");
 });
 
 
+const handleSubCategory = (e) => {
+	const subs = store.state.category?.subcategories;
+	const subsReal = subs.filter(item => item.parentCategoryId === e)
+	subCategory.value = subsReal
+}
 const categories = computed(() => {
 	return store.state.category?.categories;
 });
+
+// const subcategories = computed(() => {
+// 	return store.state.category?.subcategories;
+// });
 
 const brands = computed(() => {
 	return store.state.brand?.brands;
@@ -174,6 +204,7 @@ const addProduct = async () => {
 	formData.append("brand_id", products.productBrand);
 	formData.append("file", products.img?.raw);
 	formData.append("category", products.productCategory);
+	formData.append("subCategory", products.productSubCategory);
 	store.dispatch("product/addProduct", formData);
 };
 </script>
