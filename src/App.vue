@@ -65,4 +65,7 @@ p, h1,h2,h3,h4{
 .el-pagination{
   margin-top: 32px;
 }
+ul{
+  list-style-type: none;
+}
 </style>

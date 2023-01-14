@@ -7,7 +7,12 @@ export default {
         categories:null,
         subcategories:null,
         relatedSubcategories:null,
-        relatedCategoryProducts:null
+        relatedCategoryProducts:null,
+        currentCategory:null,
+        realCurrentCategory:null,
+        isCategoryLoading:false,
+        categoryProducts:[],
+        isLoading:false
     },
     mutations:{
         SET_PRODUCT_CATEGORIES(state, categories){
@@ -17,11 +22,20 @@ export default {
             state.subcategories = subcategories
         },
         SET_CATEGORY_SUBCATEGORIES(state, subcategories){
-            state.relatedSubcategories = subcategories
+            state.relatedSubcategories = subcategories.subcategories
+            state.currentCategory = subcategories.category[0]
+            state.realCurrentCategory = subcategories.category[0]
         },
         SET_CATEGORY_PRODUCTS(state, products){
-            state.relatedCategoryProducts = products
-        }
+            state.relatedCategoryProducts = products.products
+            if(products.category){
+                state.currentCategory = products.category[0]
+            }
+        },
+        // SET_SUBCATEGORY_PRODUCT(state, products){
+        //     state.relatedCategoryProducts = products.products
+        //     state.currentCategory = products.subcategory[0]
+        // }
     },
     actions:{
         async addCategory(_, payload){
@@ -68,21 +82,35 @@ export default {
             try{
                 const { data: subcategories } = await api.get(`/categories/subcategories/${route}`);
                 if(subcategories.success){
-                    await commit("SET_CATEGORY_SUBCATEGORIES", subcategories.subcategories)
+                    await commit("SET_CATEGORY_SUBCATEGORIES", subcategories)
                 }
             }catch(err){
                 store.dispatch("toast/error", { title: err.name, message: err.response })
             }
         },
-        async getAllProduct({commit}, route){
+        async getAllProduct({commit, rootState}, route){
             try{
+                rootState.product.isProductLoading = true
                 const { data: categories } = await api.get(`/categories/products/${route}`);
                 if(categories.success){
-                    await commit("SET_CATEGORY_PRODUCTS", categories.products)
+                    await commit("SET_CATEGORY_PRODUCTS", categories)
+                    rootState.product.isProductLoading = false
                 }
             }catch(err){
                 store.dispatch("toast/error", { title: err.name, message: err.response })
             }
         },
+        async getSubCategoryProduct({commit, rootState}, id){
+            try{
+                rootState.product.isProductLoading = true
+                const { data } = await api.get(`/categories/subcategory/product/${id}`,);
+                if(data.success){
+                    await commit("SET_CATEGORY_PRODUCTS", data)
+                    rootState.product.isProductLoading = false
+                }
+            }catch(err){
+                store.dispatch("toast/error", { title: err.name, message: err.response })
+            }
+        }
     }
 }

@@ -25,7 +25,6 @@ export default {
         async postReview({ dispatch }, form){
             try{
                 const { data } = await api.post("/reviews", form);
-                console.log(form)
                 if(data.success){
                     await dispatch("product/getSingleProduct", form.product_id, { root:true })
                     // await commit('product/SET_ONE_COMMENT', form, { root: true } )

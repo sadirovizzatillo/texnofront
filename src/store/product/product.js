@@ -13,6 +13,7 @@ export default {
 		brands: null,
 		total: null,
 		adminProducts: [],
+		isProductLoading:false
 	},
 	mutations: {
 		SET_PRODUCTS(state, products) {
@@ -38,12 +39,13 @@ export default {
 		},
 	},
 	actions: {
-		async getAllProduct({ commit }) {
+		async getAllProduct({ state, commit }) {
 			try {
+				state.isProductLoading = true
 				const { data } = await api.get("/products/all");
-				console.log(data);
 				if (data.success) {
 					await commit("SET_PRODUCTS", data.products);
+					state.isProductLoading = false
 				}
 			} catch (err) {
 				store.dispatch("toast/error", {
