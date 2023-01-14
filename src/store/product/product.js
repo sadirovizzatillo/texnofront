@@ -40,8 +40,8 @@ export default {
 	},
 	actions: {
 		async getAllProduct({ state, commit }) {
+			state.isProductLoading = true
 			try {
-				state.isProductLoading = true
 				const { data } = await api.get("/products/all");
 				if (data.success) {
 					await commit("SET_PRODUCTS", data.products);

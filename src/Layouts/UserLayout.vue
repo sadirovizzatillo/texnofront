@@ -10,6 +10,9 @@
             <div class="main">
                 <router-view></router-view>
             </div>
+            <div class="the-footer">
+                <TheFooter />
+            </div>
         </el-container>
     </div>
 </template>
@@ -17,6 +20,7 @@
 
 <script>
 import TheHeader from '@/components/TheHeader.vue';
+import TheFooter from '@/components/TheFooter.vue';
 import TheCategories from '@/components/TheCategories.vue';
 import store from '@/store';
 export default {
@@ -25,7 +29,8 @@ export default {
     },
     components:{
         TheHeader,
-        TheCategories
+        TheCategories,
+        TheFooter
     },
     computed:{
         categories(){
@@ -49,6 +54,7 @@ export default {
     margin: 0 auto;
     max-width: 1220px;
     width: 100%;
+    margin-bottom: 32px;
 }
 .header{
     margin: 0 auto;
@@ -63,5 +69,11 @@ export default {
     padding: 20px 20px 0px;
     display: flex;
     align-items: flex-start;
+}
+.the-footer{
+    margin: 0 auto;
+    max-width: 1220px;
+    width: 100%;
+    padding: 40px 20px;
 }
 </style>

@@ -196,11 +196,16 @@ const goLogin = () => {
 .login-btn img{
     margin-right: 8px;
 }
+.login-btn span{
+    font-weight: bold;
+    font-size: 14px;
+}
 .header-badge .el-button{
     border: none;
 }
 .header-badge span{
     margin-left: 6px;
+    font-weight: bold;
 }
 @media screen and (max-width:830px) {
     .site-logo{

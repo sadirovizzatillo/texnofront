@@ -12,7 +12,7 @@ export default {
         realCurrentCategory:null,
         isCategoryLoading:false,
         categoryProducts:[],
-        isLoading:false
+        categoryWithSubs:null
     },
     mutations:{
         SET_PRODUCT_CATEGORIES(state, categories){
@@ -32,6 +32,9 @@ export default {
                 state.currentCategory = products.category[0]
             }
         },
+        SET_CATEGORY_WITH_SUBCATEGORIES(state, categories){
+            state.categoryWithSubs = categories
+        }
         // SET_SUBCATEGORY_PRODUCT(state, products){
         //     state.relatedCategoryProducts = products.products
         //     state.currentCategory = products.subcategory[0]
@@ -89,8 +92,8 @@ export default {
             }
         },
         async getAllProduct({commit, rootState}, route){
+            rootState.product.isProductLoading = true
             try{
-                rootState.product.isProductLoading = true
                 const { data: categories } = await api.get(`/categories/products/${route}`);
                 if(categories.success){
                     await commit("SET_CATEGORY_PRODUCTS", categories)
@@ -101,12 +104,22 @@ export default {
             }
         },
         async getSubCategoryProduct({commit, rootState}, id){
+            rootState.product.isProductLoading = true
             try{
-                rootState.product.isProductLoading = true
                 const { data } = await api.get(`/categories/subcategory/product/${id}`,);
                 if(data.success){
                     await commit("SET_CATEGORY_PRODUCTS", data)
                     rootState.product.isProductLoading = false
+                }
+            }catch(err){
+                store.dispatch("toast/error", { title: err.name, message: err.response })
+            }
+        },
+        async getCategoryWithSubcategory({commit}){
+            try{
+                const { data } = await api.get(`/categories/subcategories`);
+                if(data.success){
+                    await commit("SET_CATEGORY_WITH_SUBCATEGORIES", data.categories)
                 }
             }catch(err){
                 store.dispatch("toast/error", { title: err.name, message: err.response })

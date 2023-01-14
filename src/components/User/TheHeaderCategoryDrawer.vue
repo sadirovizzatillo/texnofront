@@ -15,14 +15,16 @@
                     <svg data-v-45337954="" width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="arrow"><path fill-rule="evenodd" clip-rule="evenodd" d="M9.64645 6.14455C9.84171 5.94929 10.1583 5.94929 10.3536 6.14456L15.8554 11.6465C16.0507 11.8417 16.0507 12.1583 15.8554 12.3536L10.3536 17.8555C10.1583 18.0507 9.84171 18.0507 9.64645 17.8555C9.45118 17.6602 9.45118 17.3436 9.64645 17.1483L14.7948 12L9.64644 6.85166C9.45118 6.6564 9.45119 6.33981 9.64645 6.14455Z" fill="#A0A2A7"></path>
                     </svg>
                 </div>
-                <div class="header-subcategories__wrapper">
-                    <div class="header-subcategories__item">
-                        <h3>Erkaklar uchun</h3>
-                        <p>Kostum </p>
-                        <p>Futbolka</p>
-                        <p>Shim </p>
-                        <p>Jempir</p>
-                        <p>Kurtka</p>
+                <div class="header-subcategories__wrapper" >
+                    <div class="header-subcategories__item" v-for="(subs, id) in category.subcategory" :key="id">
+                        <h3>{{ subs.name }}</h3>
+                        <div>
+                            <p>Kostum </p>
+                            <p>{{ subs }}</p>
+                            <p>Shim </p>
+                            <p>Jempir</p>
+                            <p>Kurtka</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -36,7 +38,7 @@ import { computed } from 'vue';
 const store = useStore()
 
 const categories = computed(() => {
-    return store.state.category?.categories
+    return store.state.category?.categoryWithSubs
 })
 
 </script>
