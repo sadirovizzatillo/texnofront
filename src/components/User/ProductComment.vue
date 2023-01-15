@@ -7,11 +7,14 @@
             </div>
             <span v-if="review.review?.date">
                 {{ new Date(review.review?.date).getFullYear() }} -
-                {{ new Date(review.review?.date).getMonth() }} -
-                {{ new Date(review.review?.date).getDate() }} 
+                {{ (new Date(review.review?.date).getMonth() + 1) < 10 ? 
+                '0' + (new Date(review.review?.date).getMonth() + 1) :  
+                (new Date(review.review?.date).getMonth() + 1)}} -
+                {{ new Date(review.review?.date).getDate() < 10 ? '0' + new Date(review.review?.date).getDate() : new Date(review.review?.date).getDate()}} 
             </span>
             <span v-else>
-                {{ new Date().getHours() }} : {{ new Date().getMinutes() < 10 ? '0' + new Date().getMinutes() :  new Date().getMinutes() }}
+                {{ new Date().getHours() }} : {{ new Date().getMinutes() < 10 ? '0' + 
+                new Date().getMinutes() :  new Date().getMinutes() }}
             </span>
         </div>
         <p class="product-comment__text">{{ review.review.text }}</p>
@@ -21,6 +24,7 @@
 <script setup>
 import { defineProps } from 'vue';
 const review = defineProps(["review"])
+// const month = ref(["January","February","March","April","May","June","July","August","September","October","November","December"])
 </script>
 
 <style>

@@ -13,11 +13,15 @@ export default {
 		brands: null,
 		total: null,
 		adminProducts: [],
+		adviceProducts:[],
 		isProductLoading:false
 	},
 	mutations: {
 		SET_PRODUCTS(state, products) {
 			state.products = products;
+		},
+		SET_ADVICE_PRODUCTS(state, products){
+			state.adviceProducts = products
 		},
 		SET_SINGLE_PRODUCT(state, product) {
 			state.product = product.products[0];
@@ -42,6 +46,10 @@ export default {
 		async getAllProduct({ state, commit }) {
 			state.isProductLoading = true
 			try {
+				if(state.products.length){
+					state.isProductLoading = false
+					return state.products
+				}
 				const { data } = await api.get("/products/all");
 				if (data.success) {
 					await commit("SET_PRODUCTS", data.products);
@@ -172,6 +180,19 @@ export default {
 					});
 				}
 			},
+			async getAdviceProducts({ commit }, id){
+				try{
+					const { data } = await api.get(`/products/adviceproducts/${id}`);
+					if(data.success){
+						await commit("SET_ADVICE_PRODUCTS", data.products)
+					} 
+				}catch(err){
+					store.dispatch("toast/error", {
+						title: err.name,
+						message: err.response.data,
+					});
+				}
+			}
 		},
 	};
 	
