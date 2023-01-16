@@ -21,25 +21,14 @@
         
         
         <div class="header-lang">
-            <el-dropdown trigger="click">
-                <span class="el-dropdown-link">
-                    UZ<el-icon class="el-icon--right"><arrow-down /></el-icon>
-                </span>
-                <template #dropdown>
-                    <el-dropdown-menu>
-                        <el-dropdown-item>ENG</el-dropdown-item>
-                        <el-dropdown-item>
-                            RU
-                        </el-dropdown-item>
-                    </el-dropdown-menu>
-                </template>
-            </el-dropdown>
-            
+            <select v-model="$i18n.locale">
+                <option v-for="locale in $i18n.availableLocales" :key="`locale-${locale}`" :value="locale">{{ locale }}</option>
+            </select>
         </div>
         
         <el-button class="login-btn" @click="goLogin">
             <img :src="require('@/assets/user.jpeg')" alt="user" width="30" height="30">
-            <span>Kirish</span>
+            <span>{{ $t("login")}}</span>
         </el-button>
         
         <el-badge :value="basketLength" class="header-badge" type="primary">
@@ -96,7 +85,7 @@
                 -3821 4z"/>
             </g>
         </svg>
-        <span>Savatcha</span>
+        <span>{{ $t("basket")}}</span>
     </el-button>
 </el-badge>
 </div>
@@ -120,9 +109,6 @@ size="100%"
 import TheHeaderCategoryDrawer from './User/TheHeaderCategoryDrawer.vue'
 import router from '@/router'
 import store from '@/store'
-import {
-    ArrowDown,
-} from '@element-plus/icons-vue'
 import { ref } from '@vue/reactivity'
 import { computed } from '@vue/runtime-core'
 const dialog = ref(false)
@@ -132,6 +118,10 @@ const search = ref("")
 const basketLength = computed(() => {
     return store.state.basket?.purchasing?.length
 })
+
+// const handleLangChange = (e) => {
+    
+// }
 const handleSearch = (e) => {
     console.log(e)
 }
