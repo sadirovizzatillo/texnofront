@@ -85,10 +85,13 @@ export default{
 
 
 
-<style >
+<style>
 .user-header{
     background-color: #545c64;
     padding: 14px !important;
+    position: fixed;
+    width: 100%;
+    z-index: 99999;
 }
 .el-menu-item-group__title{
     display: none !important;
@@ -101,7 +104,7 @@ export default{
     margin-right: 12px;
 }
 .admin-main{
-    padding: 30px !important;
+    padding: 80px 30px !important;
     margin-left: 220px;
 }
 .el-menu{
@@ -110,10 +113,13 @@ export default{
 .user-aside{
     background-color: #545c64;
     color: #fff;
-    position: absolute;
+    position: fixed;
     width: 230px;
     height: 100%;
+    top: 60px;
     z-index: 999;
+    width: 230px;
+    height: 100%;
 }
 .user-header__wrapper{
     display: flex;

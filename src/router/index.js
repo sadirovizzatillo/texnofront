@@ -107,6 +107,14 @@ const routes = [
         component: () => import('../views/Admin/AddSubCategory.vue')
       },
       {
+        path: '/admin/addSubMiniCategory',
+        name: 'AddSubMiniCategory',
+        meta:{
+          layout: 'AdminLayout'
+        },
+        component: () => import('../views/Admin/AddSubMiniCategory.vue')
+      },
+      {
         path: '/admin/users',
         name: 'AdminUsers',
         meta:{

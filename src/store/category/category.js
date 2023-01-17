@@ -12,7 +12,8 @@ export default {
         realCurrentCategory:null,
         isCategoryLoading:false,
         categoryProducts:[],
-        categoryWithSubs:null
+        categoryWithSubs:null,
+        subminicategories:null
     },
     mutations:{
         SET_PRODUCT_CATEGORIES(state, categories){
@@ -34,6 +35,9 @@ export default {
         },
         SET_CATEGORY_WITH_SUBCATEGORIES(state, categories){
             state.categoryWithSubs = categories
+        },
+        SET_PRODUCT_SUBMINICATEGORIES(state, subminicategories){
+            state.subminicategories = subminicategories
         }
         // SET_SUBCATEGORY_PRODUCT(state, products){
         //     state.relatedCategoryProducts = products.products
@@ -79,6 +83,26 @@ export default {
                 }
             }catch(err){
                 store.dispatch("toast/error", { title: err.name, message: err.response })
+            }
+        },
+        async getSubMiniCategories({commit}){
+            try{
+                const { data: subminicategories } = await api.get("/subminicategories/all");
+                if(subminicategories.success){
+                    await commit("SET_PRODUCT_SUBMINICATEGORIES", subminicategories.subminicategory)
+                }
+            }catch(err){
+                store.dispatch("toast/error", { title: err.name, message: err.response })
+            }
+        },
+        async addSubMiniCategory(_, form){
+            try{
+                const { data } = await api.post("/subminicategories", form);
+                if(data.success){
+                    store.dispatch("toast/success", { title: 'Muvaffaqqiyatli', message: "SubMiniCategoriya qo'shildi!" })
+                }
+            }catch(err){
+                store.dispatch("toast/error", { title: err.name, message: err.response.data })
             }
         },
         async getSingleCategory({commit}, route){

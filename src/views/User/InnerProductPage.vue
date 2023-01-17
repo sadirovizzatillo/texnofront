@@ -1,6 +1,6 @@
 <template>
   <InnerProduct />
-  <div class="advice-products">
+  <div class="advice-products" v-if="adviceProducts.length">
     <AdviceProducts :adviceproducts="product"  v-for="(product, id) in adviceProducts" :key="id"/>
   </div>
 </template>

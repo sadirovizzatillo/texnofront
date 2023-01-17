@@ -43,7 +43,7 @@
         <p class="product-brand">{{ productBrand?.name }}</p>
       </div>
     </div>
-    <p class="product-description">{{ product?.text }}</p>
+    <p class="product-description">{{ product?.text  }}</p>
     
     
     <div class="product-basket__wrapper">
@@ -156,6 +156,14 @@ const submitComment = async () => {
 const handleClick = (tab, event) => {
   console.log(tab, event)
 }
+// const truncate = (value, lengths) => {
+//   const val = value.split("")
+//   if (val.length > lengths) {
+//     return value.substring(0, lengths) + "...";
+//   } else {
+//     return value;
+//   }
+// }
 const product = computed(() => {
   return store.state.product.product
 })

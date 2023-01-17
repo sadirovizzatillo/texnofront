@@ -41,7 +41,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .main .el-container{
     max-width: 1200px !important;
     margin: 0 auto;

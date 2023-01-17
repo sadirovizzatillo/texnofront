@@ -37,35 +37,50 @@
 		</el-select>
 	</el-form-item>
 	<el-form-item label="SubCategory">
-			<el-select
-			v-model="products.productSubCategory"
-			name="subcategory"
-			id="subcategory"
-			placeholder="SubCategory"
-			>
-			<el-option
-			v-for="item in subCategory"
-			:key="item._id"
-			:label="item.name"
-			:value="item._id"
-			/>
-		</el-select>
-	</el-form-item>
-	<div>
-		<el-form-item label="Brand">
-			<el-select
-			v-model="products.productBrand"
-			id="brand"
-			placeholder="Brands"
-			>
-			<el-option
-			v-for="item in brands"
-			:key="item._id"
-			:label="item.name"
-			:value="item._id"
-			/>
-		</el-select>
-	</el-form-item>
+		<el-select
+		v-model="products.productSubCategory"
+		name="subcategory"
+		id="subcategory"
+		placeholder="SubCategory"
+		@change="handleSubMiniCategory($event)"
+		>
+		<el-option
+		v-for="item in subCategory"
+		:key="item._id"
+		:label="item.name"
+		:value="item._id"
+		/>
+	</el-select>
+</el-form-item>
+<div>
+	<el-form-item label="Brand">
+		<el-select
+		v-model="products.productBrand"
+		id="brand"
+		placeholder="Brands"
+		>
+		<el-option
+		v-for="item in brands"
+		:key="item._id"
+		:label="item.name"
+		:value="item._id"
+		/>
+	</el-select>
+</el-form-item>
+<el-form-item label="SubMiniCategory">
+	<el-select
+	v-model="products.subMiniCategory"
+	id="brand"
+	placeholder="SubMiniCategory..."
+	>
+	<el-option
+	v-for="item in subMiniCategory"
+	:key="item._id"
+	:label="item.name"
+	:value="item._id"
+	/>
+</el-select>
+</el-form-item>
 </div>
 </div>
 <div class="product-costs">
@@ -136,16 +151,20 @@ const store = useStore();
 
 const dialogImageUrl = ref("");
 const dialogVisible = ref(false);
-const subCategory = ref(null)
+const subCategory = ref(null);
+const subMiniCategory = ref(null)
 const header = ref({
 	title:"Add Product",
 	hasBtn:true,
 	hasAddition:true,
+	hasSubMini:true,
 	addition:"Sub Category",
 	addMain:"Add Brand",
+	addSubMini:"Add SubMiniCategory",
 	addSubMain: "Add Category",
 	goAddition:"addSubCategory",
 	goRoute:"addBrand",
+	goSubMini:"addSubMiniCategory",
 	goSubRoute:"addCategory"
 })
 const products = reactive({
@@ -156,6 +175,7 @@ const products = reactive({
 	productQuantity:null,
 	productText:"",
 	productPrice:null,
+	subMiniCategory:null,
 	img: null
 });
 const fileList = ref([]);
@@ -166,21 +186,28 @@ onMounted(async () => {
 	await store.dispatch("brand/getBrands");
 	await store.dispatch("category/getCategories");
 	await store.dispatch("category/getSubCategories");
+	await store.dispatch("category/getSubMiniCategories");
 });
 
 
 const handleSubCategory = (e) => {
 	const subs = store.state.category?.subcategories;
 	const subsReal = subs.filter(item => item.parentCategoryId === e)
+	products.productSubCategory = ''
 	subCategory.value = subsReal
 }
+
+const handleSubMiniCategory = (e) => {
+	const subMini = store.state.category?.subminicategories;
+	const subMiniReal = subMini.filter(item => item.parentSubCategoryId === e)
+	products.subMiniCategory = ''
+	subMiniCategory.value = subMiniReal
+}
+
+
 const categories = computed(() => {
 	return store.state.category?.categories;
 });
-
-// const subcategories = computed(() => {
-// 	return store.state.category?.subcategories;
-// });
 
 const brands = computed(() => {
 	return store.state.brand?.brands;
