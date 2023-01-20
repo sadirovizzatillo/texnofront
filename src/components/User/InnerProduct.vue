@@ -1,85 +1,116 @@
 <template>
   <div class="inner-product">
-    <div class="inner-product__features">
-      <div class="inner-product__image">
-        <Splide
-        aria-labelledby="thumbnail-example-heading"
-        :options="mainOptions"
-        class="main-carousell"
-        ref="main"
-        >
-        <SplideSlide v-for="slide in 8" :key="slide.alt">
-          <img :src="`https://source.unsplash.com/random/800x450?sig=${slide}`" alt="slide.alt">
-        </SplideSlide>
-      </Splide>
+    <div class="inner-product-skleton">
+      <el-skeleton style="100%" :loading="isLoading" animated>
+        <template #template>
+          <el-skeleton-item variant="image" style="width: 100%; height: 300px" />
+        </template>
+        <template #default>
+          <div class="inner-product__image">
+            <Splide
+            aria-labelledby="thumbnail-example-heading"
+            :options="mainOptions"
+            class="main-carousell"
+            ref="main"
+            >
+            <SplideSlide v-for="slide in 8" :key="slide.alt">
+              <img :src="`https://source.unsplash.com/random/800x450?sig=${slide}`" alt="slide.alt">
+            </SplideSlide>
+          </Splide>
+          
+          <Splide
+          aria-label="The carousel with thumbnails. Selecting a thumbnail will change the main carousel"
+          :options="thumbsOptions"
+          ref="thumbs"
+          >
+          <SplideSlide v-for="slide in 8" :key="slide.alt">
+            <img :src="`https://source.unsplash.com/random/800x450?sig=${slide}`" alt="slide.alt">
+          </SplideSlide>
+        </Splide>
+        <!-- <img :src="require('../../assets/naushnik.jpg')" :alt="product?.title"> -->
+      </div>
+    </template>
+  </el-skeleton>
+  <el-skeleton style="100%" :loading="isLoading" animated>
+    <template #template>
       
-      <Splide
-      aria-label="The carousel with thumbnails. Selecting a thumbnail will change the main carousel"
-      :options="thumbsOptions"
-      ref="thumbs"
-      >
-      <SplideSlide v-for="slide in 8" :key="slide.alt">
-        <img :src="`https://source.unsplash.com/random/800x450?sig=${slide}`" alt="slide.alt">
-      </SplideSlide>
-    </Splide>
-    <!-- <img :src="require('../../assets/naushnik.jpg')" :alt="product?.title"> -->
-  </div>
-  <div class="inner-product__right"> 
-    <h2 class="inner-product__right-title">{{ product?.title }}</h2>
-    <div class="product-price__brand">
-      <div class="inner-product__price">
-        <p class="product-price__title">Лучшая цена</p>
-        <p class="product-price">{{ priceSpacer(product?.price) }} so'm</p>
-        <p>Цены обновляются каждый день</p>
-      </div>
-      <div class="inner-product__brand">
-        <div class="inner-product__check">
-          <p>Brand</p>
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="10" cy="10" r="10" fill="#6FCF97"/>
-            <path d="M6.76855 10.0166L9.4846 12.3243L13.4846 7.32428" stroke="white"/>
-          </svg>
+      <div style="display: flex; flex-direction: column;">
+        <!-- <div> -->
+          <el-skeleton-item variant="h2" style="width: 100%; margin-bottom: 16px;" />
+          <el-skeleton-item variant="p" style="width: 30%; display: flex;
+          align-items: flex-start;" />
+          <el-skeleton-item variant="p" style="width: 30%; display: flex;
+          align-items: flex-start;" />
+          <el-skeleton-item variant="p" style="width: 30%; display: flex;
+          align-items: flex-start;" />
+          <el-skeleton-item variant="text" />
+          <el-skeleton-item variant="text" />
         </div>
-        <p class="product-brand">{{ productBrand?.name }}</p>
-      </div>
-    </div>
-    <p class="product-description">{{ product?.text  }}</p>
-    
-    
-    <div class="product-basket__wrapper">
-      <p class="product-quantity">В наличии у {{ product?.quantity }} продавцов</p>
-      <el-button class="product-basket" @click="addBasket(product)">Savatga</el-button>
-    </div>
-  </div>
-</div>
-
-
-<el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
-  <el-tab-pane label="Kommentlar" name="comment">
-    <div class="inner-tab tab-comment">
-      <div class="tab-comment-form">
-        <div class="tab-comment__wrapper">
-          <h2>Baholang</h2>
-          <el-rate v-model="commentForm.rate" allow-half />
+        <!-- </div> -->
+      </template>
+      <template #default>
+        <div class="inner-product__features">
+          
+          <div class="inner-product__right"> 
+            <h2 class="inner-product__right-title">{{ product?.title }}</h2>
+            <div class="product-price__brand">
+              <div class="inner-product__price">
+                <p class="product-price__title">Лучшая цена</p>
+                <p class="product-price">{{ priceSpacer(product?.price) }} so'm</p>
+                <p>Цены обновляются каждый день</p>
+              </div>
+              <div class="inner-product__brand">
+                <div class="inner-product__check">
+                  <p>Brand</p>
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="10" cy="10" r="10" fill="#6FCF97"/>
+                    <path d="M6.76855 10.0166L9.4846 12.3243L13.4846 7.32428" stroke="white"/>
+                  </svg>
+                </div>
+                <p class="product-brand">{{ productBrand?.name }}</p>
+              </div>
+            </div>
+            <p class="product-description">{{ product?.text  }}</p>
+            
+            
+            <div class="product-basket__wrapper">
+              <p class="product-quantity">В наличии у {{ product?.quantity }} продавцов</p>
+              <el-button class="product-basket" @click="addBasket(product)">Savatga</el-button>
+            </div>
+          </div>
         </div>
-        <textarea name="comment" id="comment" cols="30" rows="10" placeholder="Qo’shimcha izoh yozib qoldiring" v-model="commentForm.comment"></textarea>
+      </template>
+    </el-skeleton>
+  </div>
+  
+  
+  
+  <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
+    <el-tab-pane label="Kommentlar" name="comment">
+      <div class="inner-tab tab-comment">
+        <div class="tab-comment-form">
+          <div class="tab-comment__wrapper">
+            <h2>Baholang</h2>
+            <el-rate v-model="commentForm.rate" allow-half />
+          </div>
+          <textarea name="comment" id="comment" cols="30" rows="10" placeholder="Qo’shimcha izoh yozib qoldiring" v-model="commentForm.comment"></textarea>
+          
+          <el-button class="send-comment" @click="submitComment">
+            Yuborish
+          </el-button>
+        </div>
         
-        <el-button class="send-comment" @click="submitComment">
-          Yuborish
-        </el-button>
+        <ProductComment :review="review" v-for="(review, id) in productReviews" :key="id"/>
+        
+        <p class="again-product">Просмотреть ещё</p>
       </div>
-      
-      <ProductComment :review="review" v-for="(review, id) in productReviews" :key="id"/>
-      
-      <p class="again-product">Просмотреть ещё</p>
-    </div>
-  </el-tab-pane>
-  <el-tab-pane label="Sharxlar" name="description">
-    <div class="inner-tab">
-      <p class="desc-para">Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui aperiam aliquam temporibus consequuntur ipsa, repellat veniam unde eaque culpa magni. Tempora cum natus adipisci dolorum beatae porro? Fuga, corporis porro impedit quas, omnis quo possimus eius harum minima cumque laborum. Perspiciatis consequatur dicta eum minus, dolore deserunt delectus tenetur similique unde, maiores quod maxime esse laborum harum quae obcaecati quas ut asperiores dignissimos sequi. Praesentium iste error quos quae, maxime pariatur ullam iusto ipsa blanditiis recusandae aperiam, officiis ea sed, unde totam et esse fugit consequuntur laborum eveniet deleniti? Nesciunt cupiditate voluptas quo perferendis. Dolorum illum error exercitationem omnis fugit recusandae vero, quasi doloribus assumenda consequatur similique odit repudiandae magni? Nisi cumque reiciendis culpa veniam. Sint laboriosam vel nobis unde id inventore mollitia nihil voluptates! Dolor architecto tenetur totam inventore dolore libero, possimus assumenda velit illum neque atque. Unde cupiditate distinctio illum consectetur itaque! Mollitia laboriosam commodi voluptate perspiciatis nihil tempora doloribus, laborum et quibusdam consectetur in modi fugiat molestias aperiam eos id culpa ratione maiores earum quod nostrum. Ratione aliquam eaque corrupti neque laboriosam itaque quo dignissimos quos eveniet sequi. Eos id nam consectetur. Qui iste aperiam dolores atque soluta quasi deleniti, est nostrum ullam veritatis ipsum reprehenderit. Earum, asperiores deleniti magni alias corporis porro saepe molestiae maxime enim quod est cum reprehenderit autem adipisci recusandae. Voluptates explicabo eaque iste reprehenderit! Officia sit harum nihil amet neque sint esse accusamus? Saepe fugit asperiores doloribus consectetur porro culpa, dignissimos architecto labore aliquam praesentium modi nemo atque maxime optio? Commodi vero nesciunt omnis fugiat, repellat eaque illo quasi pariatur asperiores earum id placeat doloremque exercitationem est porro, maiores, eveniet quaerat ducimus ex ad quisquam! Placeat explicabo minima officiis labore rerum, nulla ut ducimus aliquam illum natus necessitatibus obcaecati animi cupiditate, sapiente doloremque? Magnam optio minus necessitatibus sit odit vero in cum?</p>
-    </div>
-  </el-tab-pane>
-</el-tabs>
+    </el-tab-pane>
+    <el-tab-pane label="Sharxlar" name="description">
+      <div class="inner-tab">
+        <p class="desc-para">Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui aperiam aliquam temporibus consequuntur ipsa, repellat veniam unde eaque culpa magni. Tempora cum natus adipisci dolorum beatae porro? Fuga, corporis porro impedit quas, omnis quo possimus eius harum minima cumque laborum. Perspiciatis consequatur dicta eum minus, dolore deserunt delectus tenetur similique unde, maiores quod maxime esse laborum harum quae obcaecati quas ut asperiores dignissimos sequi. Praesentium iste error quos quae, maxime pariatur ullam iusto ipsa blanditiis recusandae aperiam, officiis ea sed, unde totam et esse fugit consequuntur laborum eveniet deleniti? Nesciunt cupiditate voluptas quo perferendis. Dolorum illum error exercitationem omnis fugit recusandae vero, quasi doloribus assumenda consequatur similique odit repudiandae magni? Nisi cumque reiciendis culpa veniam. Sint laboriosam vel nobis unde id inventore mollitia nihil voluptates! Dolor architecto tenetur totam inventore dolore libero, possimus assumenda velit illum neque atque. Unde cupiditate distinctio illum consectetur itaque! Mollitia laboriosam commodi voluptate perspiciatis nihil tempora doloribus, laborum et quibusdam consectetur in modi fugiat molestias aperiam eos id culpa ratione maiores earum quod nostrum. Ratione aliquam eaque corrupti neque laboriosam itaque quo dignissimos quos eveniet sequi. Eos id nam consectetur. Qui iste aperiam dolores atque soluta quasi deleniti, est nostrum ullam veritatis ipsum reprehenderit. Earum, asperiores deleniti magni alias corporis porro saepe molestiae maxime enim quod est cum reprehenderit autem adipisci recusandae. Voluptates explicabo eaque iste reprehenderit! Officia sit harum nihil amet neque sint esse accusamus? Saepe fugit asperiores doloribus consectetur porro culpa, dignissimos architecto labore aliquam praesentium modi nemo atque maxime optio? Commodi vero nesciunt omnis fugiat, repellat eaque illo quasi pariatur asperiores earum id placeat doloremque exercitationem est porro, maiores, eveniet quaerat ducimus ex ad quisquam! Placeat explicabo minima officiis labore rerum, nulla ut ducimus aliquam illum natus necessitatibus obcaecati animi cupiditate, sapiente doloremque? Magnam optio minus necessitatibus sit odit vero in cum?</p>
+      </div>
+    </el-tab-pane>
+  </el-tabs>
 </div>
 </template>
 
@@ -101,6 +132,7 @@ const commentForm = reactive({
   user_id:'',
   product_id:''
 })
+
 const thumbsOptions = reactive({
   type        : 'slide',
   rewind      : true,
@@ -121,6 +153,7 @@ const mainOptions = reactive({
   gap       : '1rem',
   pagination: false,
 })
+
 
 onMounted( () => {
   const thumbsSplide = thumbs.value?.splide;
@@ -156,14 +189,6 @@ const submitComment = async () => {
 const handleClick = (tab, event) => {
   console.log(tab, event)
 }
-// const truncate = (value, lengths) => {
-//   const val = value.split("")
-//   if (val.length > lengths) {
-//     return value.substring(0, lengths) + "...";
-//   } else {
-//     return value;
-//   }
-// }
 const product = computed(() => {
   return store.state.product.product
 })
@@ -173,9 +198,17 @@ const productReviews = computed(() => {
 const productBrand = computed(() => {
   return store.state.product.brand
 })
+const isLoading = computed(() => {
+  return store.state.product?.isProductLoading
+})
 </script>
 
 <style>
+.inner-product .inner-product-skleton{
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 1fr 1fr;
+}
 .inner-product .main-carousell{
   margin-bottom: 16px;
 }
@@ -191,8 +224,8 @@ const productBrand = computed(() => {
 }
 .inner-product .inner-product__features{
   padding: 40px 0;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  /* display: grid;
+  grid-template-columns: 1fr 1fr; */
 }
 .inner-product .inner-product__right{
   display: flex;

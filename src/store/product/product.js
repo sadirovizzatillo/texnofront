@@ -62,11 +62,13 @@ export default {
 				});
 			}
 		},
-		async getSingleProduct({ commit }, id) {
+		async getSingleProduct({ state, commit }, id) {
+			state.isProductLoading = true
 			try {
 				const { data } = await api.get(`/products/${id}`);
 				if (data.success) {
 					await commit("SET_SINGLE_PRODUCT", data);
+					state.isProductLoading = false
 				}
 			} catch (err) {
 				store.dispatch("toast/error", {
@@ -180,8 +182,9 @@ export default {
 					});
 				}
 			},
-			async getAdviceProducts({ commit }, id){
+			async getAdviceProducts({ state, commit }, id){
 				try{
+					state.adviceProducts = []
 					const { data } = await api.get(`/products/adviceproducts/${id}`);
 					if(data.success){
 						await commit("SET_ADVICE_PRODUCTS", data.products)

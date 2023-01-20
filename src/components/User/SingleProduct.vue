@@ -1,5 +1,5 @@
 <template>
-    <div @click='getAdviceProducts(product?.category)'>
+    <div @click="getAdviceProducts(product)">
         <router-link class="single-product" :to="{ name:'InnerProduct', params: { id: product._id }}">
             <el-skeleton style="width: 240px" :loading="isLoading" animated>
                 <template #template>
@@ -55,14 +55,13 @@ import {  computed, defineProps, ref } from 'vue';
 defineProps(["product"])
 const value = ref(3.7)
 
-
 const isLoading = computed(() => {
     return store.state.product?.isProductLoading
 })
-const getAdviceProducts = async (category) => {
-    if(category){
-        await localStorage.setItem("adviceProductCategory", category?._id)
-        await store.dispatch("product/getAdviceProducts", category?._id)
+const getAdviceProducts = async (product) => {
+    if(product){
+        await localStorage.setItem("adviceProductCategory", product?._id)
+        await store.dispatch("product/getAdviceProducts", product?._id)
     }else{
         return
     }
