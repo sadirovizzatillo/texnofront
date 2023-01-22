@@ -16,14 +16,10 @@
                     </svg>
                 </div>
                 <div class="header-subcategories__wrapper" >
-                    <div class="header-subcategories__item" v-for="(subs, id) in category.subcategory" :key="id">
+                    <div class="header-subcategories__item" v-for="(subs, id) in category.subcategories" :key="id">
                         <h3>{{ subs.name }}</h3>
                         <div>
-                            <p>Kostum </p>
-                            <p>{{ subs }}</p>
-                            <p>Shim </p>
-                            <p>Jempir</p>
-                            <p>Kurtka</p>
+                            <p>{{ subs.name }}</p>
                         </div>
                     </div>
                 </div>
@@ -52,6 +48,11 @@ const categories = computed(() => {
 }
 .header-categories__list:hover ~ .header-subcategories{
     display: block;
+}
+.header-subcategories__wrapper{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 20px;
 }
 .header-categories__item{
     width: 100%;
