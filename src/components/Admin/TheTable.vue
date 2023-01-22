@@ -70,33 +70,49 @@
                 </el-select>          
             </el-form-item>
             <el-form-item label="Edit Category">
-                <el-select v-model="editCategory" name="category" id="category" placeholder="Categories">
-                    <el-option
-                    v-for="item in categories"
-                    :key="item._id"
-                    :label="item.name"
-                    :value="item._id"
-                    />
-                </el-select>          
-            </el-form-item>
-        </el-form>
+                <el-select 
+                v-model="editCategory" 
+                name="category" 
+                Wid="category" 
+                placeholder="Categories" 
+                @change="handleSubCategory($event)"
+                >
+                <el-option
+                v-for="item in categories"
+                :key="item._id"
+                :label="item.name"
+                :value="item._id"
+                />
+            </el-select>          
+        </el-form-item>
+        <el-form-item label="Edit SubCategory">
+            <el-select v-model="editSubCategory" name="category" id="category" placeholder="Categories">
+                <el-option
+                v-for="item in subCategory"
+                :key="item._id"
+                :label="item.name"
+                :value="item._id"
+                />
+            </el-select>          
+        </el-form-item>
+    </el-form>
+</span>
+<span v-if="isDelete">Do you really want to delete this user?</span>
+<template #footer>
+    <span class="dialog-footer" v-if="isEdit">
+        <el-button @click="userModal">Cancel</el-button>
+        <el-button type="primary" @click="editUser">
+            Edit
+        </el-button>
     </span>
-    <span v-if="isDelete">Do you really want to delete this user?</span>
-    <template #footer>
-        <span class="dialog-footer" v-if="isEdit">
-            <el-button @click="userModal">Cancel</el-button>
-            <el-button type="primary" @click="editUser">
-                Edit
-            </el-button>
-        </span>
-        
-        <span class="dialog-footer" v-if="isDelete">
-            <el-button @click="userModal">Cancel</el-button>
-            <el-button type="primary" @click="deleteProduct">
-                Delete
-            </el-button>
-        </span>
-    </template>
+    
+    <span class="dialog-footer" v-if="isDelete">
+        <el-button @click="userModal">Cancel</el-button>
+        <el-button type="primary" @click="deleteProduct">
+            Delete
+        </el-button>
+    </span>
+</template>
 </el-dialog>
 </template>
 
@@ -104,6 +120,7 @@
 import { defineProps, ref } from "vue";
 import { useStore } from "vuex"
 const isEdit = ref(false)
+const subCategory = ref(null);
 const editModal = ref(false)
 const editTitle = ref(null)
 const editQuantity = ref("")
@@ -112,6 +129,7 @@ const isDelete = ref(false)
 const editText = ref('')
 const editBrand = ref(null)
 const editCategory = ref(null)
+const editSubCategory = ref(null)
 const productId = ref(null)
 const store = useStore();
 
@@ -136,6 +154,13 @@ const userModal = (data) => {
     }
 }
 
+const handleSubCategory = (e) => {
+	const subs = store.state.category?.subcategories;
+	const subsReal = subs.filter(item => item.parentCategoryId === e)
+	editSubCategory.value = ''
+	subCategory.value = subsReal
+}
+
 const deleteProduct = () => {
     editModal.value = !editModal.value
     const id = productId.value
@@ -151,7 +176,8 @@ const editUser = () => {
         text: editText.value,
         brand_id: editBrand.value,
         quantity:editQuantity.value,
-        category: editCategory.value
+        category: editCategory.value,
+        subCategory: editSubCategory.value
     }
     store.dispatch("product/editProduct", form)
 }

@@ -41,6 +41,7 @@ onMounted(async () => {
   await store.dispatch("product/getAllAdminProduct")
   await store.dispatch("brand/getBrands")
   await store.dispatch("category/getCategories")
+  await store.dispatch("category/getSubCategories")
 })
 
 const brands = computed(() => {
