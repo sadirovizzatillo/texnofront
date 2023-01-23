@@ -4,6 +4,7 @@
     <div class="main-products">
       <SingleProduct :product="product" v-for="(product, id) in products" :key="id" />
     </div>
+    <p class="again-product">Просмотреть ещё</p>
     <img class="banner" src="https://images.uzum.uz/cehgelol08kcldtp1uhg/main_page_banner.jpg" alt="">
   </div>
 </template>
