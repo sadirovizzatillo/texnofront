@@ -15,6 +15,7 @@
     "@fortawesome/vue-fontawesome": "^3.0.2",
     "@splidejs/splide": "^4.1.4",
     "@splidejs/vue-splide": "^0.6.12",
+    "apexcharts": "^3.36.3",
     "axios": "^1.2.1",
     "core-js": "^3.8.3",
     "element-plus": "^2.2.27",
@@ -27,6 +28,7 @@
     "vue-i18n": "^9.2.2",
     "vue-router": "^4.0.3",
     "vue-slick-carousel": "^1.0.6",
+    "vue3-apexcharts": "^1.4.1",
     "vuex": "^4.0.0"
   },
   "devDependencies": {

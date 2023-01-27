@@ -61,76 +61,74 @@ const routes = [
   {
     path: '/admin',
     name: 'Admin',
-    redirect: { name: "AdminProducts" },
     meta:{
       layout: 'AdminLayout'
     },
-    children:[
-      {
-        path: '/admin/products',
-        name: 'AdminProducts',
-        meta:{
-          layout: 'AdminLayout'
-        },
-        component: () => import('../views/Admin/AdminProducts.vue')
-      },
-      {
-        path: '/admin/addProduct',
-        name: 'AddProduct',
-        meta:{
-          layout: 'AdminLayout'
-        },
-        component: () => import('../views/Admin/AddProduct.vue')
-      },
-      {
-        path: '/admin/addBrand',
-        name: 'AddBrand',
-        meta:{
-          layout: 'AdminLayout'
-        },
-        component: () => import('../views/Admin/AddBrand.vue')
-      },
-      {
-        path: '/admin/addCategory',
-        name: 'AddCategory',
-        meta:{
-          layout: 'AdminLayout'
-        },
-        component: () => import('../views/Admin/AddCategory.vue')
-      },
-      {
-        path: '/admin/addSubCategory',
-        name: 'AddSubCategory',
-        meta:{
-          layout: 'AdminLayout'
-        },
-        component: () => import('../views/Admin/AddSubCategory.vue')
-      },
-      {
-        path: '/admin/addSubMiniCategory',
-        name: 'AddSubMiniCategory',
-        meta:{
-          layout: 'AdminLayout'
-        },
-        component: () => import('../views/Admin/AddSubMiniCategory.vue')
-      },
-      {
-        path: '/admin/users',
-        name: 'AdminUsers',
-        meta:{
-          layout: 'AdminLayout'
-        },
-        component: () => import('../views/Admin/AdminUsers.vue')
-      },
-      {
-        path: '/admin/addUser',
-        name: 'AdminAddUser',
-        meta:{
-          layout: 'AdminLayout'
-        },
-        component: () => import('../views/Admin/AdminAddUser.vue')
-      }
-    ]
+    component: () => import('../views/Admin/AdminMain.vue'),
+  },
+  {
+    path: '/admin/products',
+    name: 'AdminProducts',
+    meta:{
+      layout: 'AdminLayout'
+    },
+    component: () => import('../views/Admin/AdminProducts.vue')
+  },
+  {
+    path: '/admin/addProduct',
+    name: 'AddProduct',
+    meta:{
+      layout: 'AdminLayout'
+    },
+    component: () => import('../views/Admin/AddProduct.vue')
+  },
+  {
+    path: '/admin/addBrand',
+    name: 'AddBrand',
+    meta:{
+      layout: 'AdminLayout'
+    },
+    component: () => import('../views/Admin/AddBrand.vue')
+  },
+  {
+    path: '/admin/addCategory',
+    name: 'AddCategory',
+    meta:{
+      layout: 'AdminLayout'
+    },
+    component: () => import('../views/Admin/AddCategory.vue')
+  },
+  {
+    path: '/admin/addSubCategory',
+    name: 'AddSubCategory',
+    meta:{
+      layout: 'AdminLayout'
+    },
+    component: () => import('../views/Admin/AddSubCategory.vue')
+  },
+  {
+    path: '/admin/addSubMiniCategory',
+    name: 'AddSubMiniCategory',
+    meta:{
+      layout: 'AdminLayout'
+    },
+    component: () => import('../views/Admin/AddSubMiniCategory.vue')
+  },
+  {
+    path: '/admin/users',
+    name: 'AdminUsers',
+    meta:{
+      layout: 'AdminLayout'
+    },
+    component: () => import('../views/Admin/AdminUsers.vue')
+  },
+  {
+    path: '/admin/addUser',
+    name: 'AdminAddUser',
+    meta:{
+      layout: 'AdminLayout'
+    },
+    component: () => import('../views/Admin/AdminAddUser.vue')
   },
   {
     path: '/:pathMatch(.*)*',

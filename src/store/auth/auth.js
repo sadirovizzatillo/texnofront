@@ -6,7 +6,8 @@ export default {
     state:{
         user:null,
         users:[],
-        total:null
+        total:null,
+        statisticUsers:null
     },
     getters:{
         
@@ -18,6 +19,9 @@ export default {
         SET_ALL_USERS(state, users){
             state.users = users.user
             state.total = users.allPage
+        },
+        SET_ADMIN_USERS_STATISTICS(state, users){
+            state.statisticUsers = users
         }
     },
     actions:{
@@ -100,10 +104,20 @@ export default {
         },
         async editUser(_, form){
             try{
-                console.log(form)
                 const { data } = await api.put(`/auth/updateUser/${form.id}`, form)
                 if(data.success){
-                    store.dispatch("toast/success", { title: "Muvaffaqqiyatli", message:"Malumot o'zgartirildi!" })
+                    await store.dispatch("toast/success", { title: "Muvaffaqqiyatli", message:"Malumot o'zgartirildi!" })
+                    await _.dispatch("getAllUsers")
+                }
+            }catch(err){
+                store.dispatch("toast/error", { title: err.name, message: err.response.data })
+            }
+        },
+        async getUsersStatistic(_){
+            try{
+                const { data } = await api.get(`/auth/users/statistic`)
+                if(data.success){
+                    await _.commit("SET_ADMIN_USERS_STATISTICS", data.user)
                 }
             }catch(err){
                 store.dispatch("toast/error", { title: err.name, message: err.response.data })
