@@ -27,7 +27,6 @@ export default {
                             quantity: purchase?.purchased.length
                         }
                     })
-                    console.log(configPurchase)
                     await commit("SET_ALL_PURCHASES", configPurchase)
                 }
             }catch(err){

@@ -7,7 +7,8 @@ export default {
         user:null,
         users:[],
         total:null,
-        statisticUsers:null
+        statisticUsers:null,
+        userChart:null
     },
     getters:{
         
@@ -15,6 +16,9 @@ export default {
     mutations:{
         SET_USER(state, user){
             state.user = user
+        },
+        SET_ADMIN_USERS_STATISTICS_CHART(state, user){
+            state.userChart = user
         },
         SET_ALL_USERS(state, users){
             state.users = users.user
@@ -84,7 +88,7 @@ export default {
         },
         async usersPaginate({ commit }, val){
             try{
-                const { data } = await api.get(`/auth/users?page${val}`) ;
+                const { data } = await api.get(`/auth/users?page=${val}`) ;
                 if(data.success){
                     await commit("SET_ALL_USERS", data)
                 }
@@ -118,6 +122,16 @@ export default {
                 const { data } = await api.get(`/auth/users/statistic`)
                 if(data.success){
                     await _.commit("SET_ADMIN_USERS_STATISTICS", data.user)
+                }
+            }catch(err){
+                store.dispatch("toast/error", { title: err.name, message: err.response.data })
+            }
+        },
+        async getUsersStatisticChart(_){
+            try{
+                const { data } = await api.get(`/auth/users/chart`)
+                if(data.success){
+                    await _.commit("SET_ADMIN_USERS_STATISTICS_CHART", data.user)
                 }
             }catch(err){
                 store.dispatch("toast/error", { title: err.name, message: err.response.data })

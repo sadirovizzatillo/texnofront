@@ -40,7 +40,6 @@ const removeBasketProduct = (product) => {
     store.dispatch("basket/removeBasketProduct", product)
 }
 const handleQuantityChange = (product) => {
-    console.log(num.value, product)
     store.dispatch("basket/countTotal", { count: num.value, product:product })
 }
 

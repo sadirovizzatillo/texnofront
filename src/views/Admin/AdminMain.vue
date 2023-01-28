@@ -15,18 +15,25 @@
         <div id="chart">
             <apexchart type="line" height="550" :options="chartOptions" :series="series"></apexchart>
         </div>
+        <div id="chart">
+            <TheUsersChart />
+        </div>
     </div>
 </template>
 
 <script>
 import store from '@/store'
 import api from '../../../api/api'
+import TheUsersChart from "@/components/Admin/TheUsersChart.vue"
 export default {
     name:"AdminMain",
     async mounted(){
         await store.dispatch("auth/getUsersStatistic")
         await store.dispatch("product/getProductsStatistic")
         await this.getAllPurchases()
+    },
+    components:{
+        TheUsersChart
     },
     computed:{
         statisticUser(){
@@ -39,8 +46,6 @@ export default {
     methods:{
         async getAllPurchases(){
             try{
-                // var categories = [];
-                // var quantity = [];
                 const { data: purchases } = await api.get("/purchase/all");
                 if(purchases.success){
                     const configPurchase = await purchases?.purchased.map(purchase => {
@@ -53,13 +58,7 @@ export default {
                     await configPurchase.forEach(item => {
                         this.chartOptions.xaxis.categories.push(item.categories)
                         this.series[0].data.push(item.quantity)
-                    })
-
-                    console.log(this.chartOptions.xaxis.categories)
-                    
-                    // this.series[0].data = await quantity
-                    // this.chartOptions.xaxis.categories = await categories
-                    // console.log(this.chartOptions.xaxis.categories)
+                    })                    
                 }
             }catch(err){
                 store.dispatch("toast/error", {
@@ -110,6 +109,9 @@ export default {
 </script>
 
 <style scoped>
+#chart{
+    margin-bottom: 32px;
+}
 .info-product__card{
     display: flex;
     flex-direction: column;
