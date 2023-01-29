@@ -15,7 +15,9 @@ export default {
 		adminProducts: [],
 		adviceProducts:[],
 		isProductLoading:false,
-		statisticsProducts:null
+		statisticsProducts:null,
+		mainProducts:null,
+		bestseller:null
 	},
 	mutations: {
 		SET_PRODUCTS(state, products) {
@@ -23,6 +25,12 @@ export default {
 		},
 		SET_ADMIN_PRODUCTS_STATISTICS(state, products){
 			state.statisticsProducts = products
+		},
+		SET_ADMIN_MAINPRODUCTS_BESTSELLER(state, bestseller){
+			state.bestseller = bestseller
+		},
+		SET_ADMIN_MAINPRODUCTS_CATEGORY(state, mainproducts){
+			state.mainProducts = mainproducts
 		},
 		SET_ADVICE_PRODUCTS(state, products){
 			state.adviceProducts = products
@@ -205,11 +213,33 @@ export default {
 				try{
 					const { data } = await api.get(`/products/statistics`)
 					if(data.success){
-						console.log(data.products)
 						await _.commit("SET_ADMIN_PRODUCTS_STATISTICS", data.products)
 					}
 				}catch(err){
 					store.dispatch("toast/error", { title: err.name, message: err.response.data })
+				}
+			},
+			async getMainCategoryProducts(_){
+				try{
+					const { data } = await api.get(`/products/main/category`)
+					if(data.success){
+						await _.commit("SET_ADMIN_MAINPRODUCTS_CATEGORY", data.products)
+					}
+				}catch(err){
+					store.dispatch("toast/error", { title: err.name, message: err.response.statusText })
+				}
+			},
+			async getMainBestSellers(_){
+				if(_.state.bestseller !== null){
+					return _.state.bestseller
+				}
+				try{
+					const { data } = await api.get(`/products/bestseller`);
+					if(data.success){
+						await _.commit("SET_ADMIN_MAINPRODUCTS_BESTSELLER", data.bestseller)
+					}
+				}catch(err){
+					store.dispatch("toast/error", { title: err.name, message: err.response.statusText })
 				}
 			}
 		},

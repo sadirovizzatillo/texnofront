@@ -20,10 +20,13 @@
                             class="el-menu-vertical-demo"
                             text-color="#fff"
                             >
-                            <el-menu-item index="1" @click="(() => $router.push('/admin/products'))">
+                            <el-menu-item index="1" @click="(() => $router.push('/admin'))">
+                                <span>Main</span>
+                            </el-menu-item>
+                            <el-menu-item index="2" @click="(() => $router.push('/admin/products'))">
                                 <span>Products</span>
                             </el-menu-item>
-                            <el-sub-menu index="2">
+                            <el-sub-menu index="3">
                                 <template #title>
                                     <span>Users</span>
                                 </template>

@@ -132,7 +132,11 @@ const routes = [
   },
   {
     path: '/:pathMatch(.*)*',
-    component: () => import('../views/EmptyView.vue')  
+    redirect:{  path: "/" },
+    meta:{
+      layout:"AdminLayout"
+    },
+    // component: () => import('../views/EmptyView.vue')  
   },
 ]
 

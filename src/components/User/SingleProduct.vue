@@ -24,7 +24,7 @@
             </template>
             <template #default>
                 <div>
-                    <img  :src="require('../../assets/naushnik.jpg')" :alt="product.title" width="220" height="220">
+                    <img  :src="product.productImage.url ?? require('../../assets/naushnik.jpg')" :alt="product.title" width="220" height="220">
                 </div>
                 <h2 class="single-product__title">{{ product.title  }}</h2>
                 <el-rate

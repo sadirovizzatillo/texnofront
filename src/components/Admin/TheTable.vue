@@ -21,7 +21,7 @@
                     <img :src="'https://texnomart.onrender.com/' + scope.row.productImage" :alt="scope.row.title" width="40" height="40">
                 </div> -->
                 <div>
-                    <img :src="require('@/assets/naushnik.jpg')" :alt="scope.row.title" width="40" height="40">
+                    <img :src="scope.row.productImage.url ?? require('@/assets/naushnik.jpg')" :alt="scope.row.title" width="40" height="40">
                 </div>
             </template>
         </el-table-column>
